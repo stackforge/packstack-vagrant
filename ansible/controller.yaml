@@ -1,0 +1,34 @@
+---
+- yum: name=http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm state=present
+- yum: name=git state=present
+  when: development
+- git: repo=https://github.com/stackforge/packstack
+       dest=/opt/packstack
+  when: development
+- file: path=/opt/packstack owner=vagrant group=vagrant recurse=yes
+  when: development
+- command: python setup.py install
+           chdir=/opt/packstack
+  when: development
+- command: python setup.py install_puppet_modules
+           chdir=/opt/packstack
+  when: development
+- yum: name=openstack-packstack state=present
+  when: not development
+- template: src=files/openrc.j2 dest=/home/vagrant/openrc owner=vagrant group=vagrant mode=0644
+- lineinfile: dest=/home/vagrant/.bashrc line='source $HOME/openrc'
+- copy: src=files/setup.sh dest=/home/vagrant/scripts/setup.sh owner=vagrant group=vagrant mode=0755
+- copy: src=files/initialize.sh dest=/home/vagrant/scripts/initialize.sh mode=0755 owner=vagrant group=vagrant
+- filesystem: fstype=xfs dev=/dev/sdb force=yes
+- filesystem: fstype=xfs dev=/dev/sdc force=yes
+- template: src=files/packstack.answers.j2 dest=/home/vagrant/packstack.answers owner=vagrant group=vagrant
+- yum: name=patch state=present
+  when: not development
+- copy: src=patches dest=/home/vagrant owner=vagrant group=vagrant mode=0644
+  when: not development
+- patch: patchfile={{ item }} basedir=/ strip=1
+  when: not development
+  with_items:
+  - /home/vagrant/patches/mongodb.pp
+  - /home/vagrant/patches/nova_compute_libvirt.pp
+- copy: src=files/gitconfig dest=/home/vagrant/.gitconfig owner=vagrant group=vagrant mode=0644

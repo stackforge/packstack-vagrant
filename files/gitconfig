@@ -1,0 +1,5 @@
+[user]
+	name = packstack-vagrant
+	email = vagrant@controller
+[push]
+	default = simple

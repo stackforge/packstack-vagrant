@@ -1,0 +1,7 @@
+*.box
+config.yaml
+*.log
+.vagrant
+*.vdi
+.tox
+doc/build

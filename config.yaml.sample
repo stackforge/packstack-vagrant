@@ -1,0 +1,29 @@
+---
+box: b1-systems/centos-packstack
+box_storage_controller: 'SATA Controller'
+development: false
+bridge_internal: tap0
+bridge_external: tap1
+network_agent: openvswitch
+network_type: gre
+netmask_internal: 255.255.0.0
+use_cache: true
+storage_backend: nfs
+address:
+  controller: 10.100.50.10
+  nfs: 10.100.50.41
+  network: 10.100.50.30
+  shared: 10.100.50.50
+  storage: 10.100.50.40
+  compute: 
+  - 10.100.50.20
+  - 10.100.50.21
+ntp:
+- 0.pool.ntp.org
+- 1.pool.ntp.org
+- 2.pool.ntp.org
+- 3.pool.ntp.org
+resources:
+  memory: 4096
+  vcpus: 2
+  storage: 65536

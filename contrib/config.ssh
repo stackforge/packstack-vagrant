@@ -1,0 +1,43 @@
+# --- Packstack environment ---
+
+Host controller
+    HostName 10.100.50.10
+    Port 22
+    User vagrant
+    IdentityFile ~/.ssh/id_rsa.packstack
+
+Host compute1
+    HostName 10.100.50.20
+    Port 22
+    User vagrant
+    IdentityFile ~/.ssh/id_rsa.packstack
+
+Host compute2
+    HostName 10.100.50.21
+    Port 22
+    User vagrant
+    IdentityFile ~/.ssh/id_rsa.packstack
+
+Host network
+    HostName 10.100.50.30
+    Port 22
+    User vagrant
+    IdentityFile ~/.ssh/id_rsa.packstack
+
+Host storage
+    HostName 10.100.50.40
+    Port 22
+    User vagrant
+    IdentityFile ~/.ssh/id_rsa.packstack
+
+Host nfs
+    HostName 10.100.50.41
+    Port 22
+    User vagrant
+    IdentityFile ~/.ssh/id_rsa.packstack
+
+Host shared
+    HostName 10.100.50.50
+    Port 22
+    User vagrant
+    IdentityFile ~/.ssh/id_rsa.packstack

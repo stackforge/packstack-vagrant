@@ -1,0 +1,6 @@
+---
+- yum: name=https://rdo.fedorapeople.org/rdo-release.rpm state=present
+- yum: name=openvswitch state=present
+- service: name=openvswitch state=started enabled=yes
+- openvswitch_bridge: bridge=br-ex state=present
+- openvswitch_port: bridge=br-ex port=enp0s10 state=present
