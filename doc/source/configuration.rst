@@ -92,12 +92,12 @@ Vagrantbox based on
 `boxcutter/centos70 <https://github.com/box-cutter/centos-vm>`__. The
 sources of the used `Packer <https://packer.io/>`__ template is
 available on `Github <https://github.com/b1-systems/packer-templates>`__
-and on the
-`Vagrantcloud <https://github.com/b1-systems/packer-templates>`__.
+and the box iself on
+`Atlas <https://atlas.hashicorp.com/b1-systems/centos-packstack>`__.
 
 To change the used Vagrant base box modify the value of ``box``. A list
-of public available Vagrant boxes is available at
-https://vagrantcloud.com.
+of public available Vagrant boxes is available on
+`Atlas <https://atlas.hashicorp.com/>`__.
 
 Depending on the used base box you have to set the used storage
 controller (normally ``IDE Controller`` or ``SATA Controller``). The
