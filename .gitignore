@@ -5,3 +5,4 @@ config.yaml
 *.vdi
 .tox
 doc/build
+*egg*
