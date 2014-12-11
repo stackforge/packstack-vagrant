@@ -45,6 +45,10 @@ Vagrant.configure(2) do |config|
     config.cache.scope = :machine
   end
 
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+
   CONFIG['address']['compute'].each_with_index do |address, index|
     name = "compute#{index + 1}"
     config.vm.define name do |node|
