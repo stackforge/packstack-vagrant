@@ -34,6 +34,8 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--memory", CONFIG['resources']['memory']]
     vb.customize ["modifyvm", :id, "--cpus", CONFIG['resources']['vcpus']]
     vb.customize ["modifyvm", :id, "--pagefusion", "on"]
+    vb.customize ["modifyvm", :id, "--largepages", "on"]
+    vb.customize ["modifyvm", :id, "--pae", "off"]
   end
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "playbook.yaml"
