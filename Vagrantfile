@@ -40,7 +40,7 @@ Vagrant.configure(2) do |config|
   end
 
   if CONFIG['use_cache'] and Vagrant.has_plugin?("vagrant-cachier")
-    config.cache.scope = :box
+    config.cache.scope = :machine
   end
 
   config.vm.define 'template' do |node|
