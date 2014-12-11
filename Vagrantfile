@@ -28,7 +28,7 @@ def add_block_device(node, port, size)
 end
 
 Vagrant.configure(2) do |config|
-  config.vm.box = 'packstack-template'
+  config.vm.box = CONFIG['box']
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", CONFIG['resources']['memory']]
@@ -43,11 +43,6 @@ Vagrant.configure(2) do |config|
 
   if CONFIG['use_cache'] and Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :machine
-  end
-
-  config.vm.define 'template' do |node|
-    node.vm.box = CONFIG['box']
-    node.vm.hostname = 'template'
   end
 
   CONFIG['address']['compute'].each_with_index do |address, index|

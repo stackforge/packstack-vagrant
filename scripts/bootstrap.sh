@@ -15,17 +15,6 @@ echo "$(date) cleaning up"
 rm -f log/*
 vagrant destroy
 
-vagrant box list | grep packstack-template > /dev/null
-if [[ $? -ne 0 ]]; then
-    echo "$(date) preparing template"
-    vagrant up template 2>&1 >> log/template.log
-    vagrant halt template 2>&1 >> log/template.log
-    vagrant package --output packstack-template.box template 2>&1 >> log/template.log
-    vagrant destroy --force template 2>&1 >> log/template.log
-    vagrant box add --force --name packstack-template --provider virtualbox packstack-template.box 2>&1 >> log/template.log
-    rm -f packstack-template.box
-fi
-
 echo "$(date) brining up all VMs"
 run 2 up --no-provision
 
