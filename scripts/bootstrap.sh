@@ -1,7 +1,9 @@
 #!/bin/bash
 
 run() {
-    python scripts/get_hosts.py | xargs -n 1 -P 1 -I BOX sh -c "echo - BOX && (vagrant $* BOX 2>&1 >> log/BOX.log)"
+    number=$1
+    shift
+    python scripts/get_hosts.py | xargs -n 1 -P $number -I BOX sh -c "echo - BOX && (vagrant $* BOX 2>&1 >> log/BOX.log)"
 }
 
 if [[ ! -e config.yaml ]]; then
@@ -25,13 +27,13 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "$(date) brining up all VMs"
-run up --no-provision
+run 2 up --no-provision
 
 echo "$(date) provisioning all VMs"
-run provision
+run 4 provision
 
 echo "$(date) reloading all VMs"
-run reload
+run 4 reload
 
 echo "$(date) initializing the controller node"
 vagrant ssh controller -c '/home/vagrant/scripts/initialize.sh' 2>&1 >> log/controller.log
