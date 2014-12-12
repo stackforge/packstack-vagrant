@@ -3,7 +3,8 @@
 run() {
     number=$1
     shift
-    python scripts/get_hosts.py | xargs -n 1 -P $number -I BOX sh -c "echo - BOX && (vagrant $* BOX 2>&1 >> log/BOX.log)"
+    python scripts/get_hosts.py | grep -v controller | xargs -n 1 -P $number \
+        -I BOX sh -c "echo - BOX && (vagrant $* BOX 2>&1 >> log/BOX.log)"
 }
 
 if [[ ! -e config.yaml ]]; then
@@ -15,13 +16,17 @@ echo "$(date) cleaning up"
 rm -f log/*
 vagrant destroy
 
+echo "$(date) bringign up, provisioning and reloading the controller VM"
+vagrant up controller >> log/controller.log
+vagrant reload controller >> log/controller.log
+
 echo "$(date) brining up all VMs"
 run 2 up --no-provision
 
-echo "$(date) provisioning all VMs"
+echo "$(date) provisioning all other VMs"
 run 4 provision
 
-echo "$(date) reloading all VMs"
+echo "$(date) reloading all other VMs"
 run 4 reload
 
 echo "$(date) initializing the controller node"

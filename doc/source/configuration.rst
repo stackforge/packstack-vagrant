@@ -116,16 +116,32 @@ Timezone
 At the moment it is not possible to configure the timezone with
 Packstack.
 
-Caching
--------
+Caching / Proxying
+------------------
 
 To speed up the provisioning the Vagrant plugin
-`vagrant-cachier <https://github.com/fgrehm/vagrant-cachier>`__
-can be used.
+`vagrant-proxyconf <https://github.com/tmatilai/vagrant-proxyconf/>`__
+configures a HTTP proxy to be used by ``yum``.
 
 ::
 
-    $ vagrant plugin install vagrant-cachier
+    $ vagrant plugin install vagrant-proxyconf
 
-When the plugin is installed caching is enabled by default. To explicitly
-disable caching when the plugin is installed set ``use_cache: false``.
+When the plugin is installed caching/proxying is enabled by default and the
+HTTP proxy `Squid <http://www.squid-cache.org/>`__ will be installed on the
+controller node.
+
+::
+
+  proxy:
+    use: true
+    address: 'http://proxy.company.site:3128'
+    install: true
+
+To explicitly disable caching/proxying when ``vagrant-proxyconf`` is installed
+set ``use`` to ``false``.
+
+To skip the installation of Squid on the controller node set ``install``
+to ``false``. ``address`` has to point to an existing HTTP proxy server (e.g.
+``http://proxy.company.site:3128``) when Squid is not installed. ``address``
+has not to be set when installing Squid on the controller node.

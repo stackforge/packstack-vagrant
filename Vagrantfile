@@ -43,10 +43,18 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision 'ansible' do |ansible|
     ansible.playbook = 'playbook.yaml'
+    ansible.extra_vars = {
+      install_proxy: CONFIG['proxy']['install']
+    }
   end
 
-  if CONFIG['use_cache'] && Vagrant.has_plugin?('vagrant-cachier')
-    config.cache.scope = :machine
+  if CONFIG['proxy']['use'] && Vagrant.has_plugin?('vagrant-proxyconf')
+    if CONFIG['proxy']['install']
+      config.proxy.http  = "http://#{CONFIG['address']['controller']}:3128/"
+    else
+      config.proxy.http  = CONFIG['proxy']['address']
+    end
+    config.proxy.no_proxy = 'localhost,127.0.0.1'
   end
 
   if Vagrant.has_plugin?("vagrant-vbguest")
@@ -67,7 +75,7 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  %w('network' 'storage' 'shared').each do |name|
+  %w(network storage shared).each do |name|
     config.vm.define name do |node|
       node.vm.hostname = name
       node.vm.network :public_network,
@@ -108,5 +116,8 @@ Vagrant.configure(2) do |config|
     end
     add_block_device(node, 1, CONFIG['resources']['storage'])
     add_block_device(node, 2, CONFIG['resources']['storage'])
+    if CONFIG['proxy']['install'] && CONFIG['proxy']['use']
+      node.proxy.enabled = false
+    end
   end
 end

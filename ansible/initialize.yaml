@@ -1,6 +1,7 @@
 ---
+- lineinfile: dest=/etc/yum/pluginconf.d/fastestmirror.conf regexp=^enabled= line=enabled=0
 - yum: name=deltarpm state=present
-- yum: name=https://rdo.fedorapeople.org/rdo-release.rpm state=present
+- yum: name=http://rdo.fedorapeople.org/rdo-release.rpm state=present
 - yum: name=* state=latest
 - yum: name=openstack-selinux state=present
 - yum: name=vim-enhanced state=present
