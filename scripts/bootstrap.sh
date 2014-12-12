@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ -z "$1" ]]; then
+    p=1
+else
+    p=$1
+fi
+
 run() {
     number=$1
     shift
@@ -21,13 +27,13 @@ vagrant up controller >> log/controller.log
 vagrant reload controller >> log/controller.log
 
 echo "$(date) brining up all VMs"
-run 2 up --no-provision
+run $p up --no-provision
 
 echo "$(date) provisioning all other VMs"
-run 4 provision
+run $p provision
 
 echo "$(date) reloading all other VMs"
-run 4 reload
+run $p reload
 
 echo "$(date) initializing the controller node"
 vagrant ssh controller -c '/home/vagrant/scripts/initialize.sh' 2>&1 >> log/controller.log
