@@ -29,15 +29,3 @@ Host storage
     Port 22
     User vagrant
     IdentityFile ~/.ssh/id_rsa.packstack
-
-Host nfs
-    HostName 10.100.50.41
-    Port 22
-    User vagrant
-    IdentityFile ~/.ssh/id_rsa.packstack
-
-Host shared
-    HostName 10.100.50.50
-    Port 22
-    User vagrant
-    IdentityFile ~/.ssh/id_rsa.packstack

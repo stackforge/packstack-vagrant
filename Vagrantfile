@@ -76,7 +76,7 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  %w(network storage shared).each do |name|
+  %w(network storage).each do |name|
     config.vm.define name do |node|
       node.vm.hostname = name
       node.vm.network :public_network,
