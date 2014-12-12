@@ -8,6 +8,6 @@
   - include: ansible/network.yaml
     when: inventory_hostname_short == 'network'
   - include: ansible/nfs.yaml
-    when: inventory_hostname_short == 'nfs'
+    when: inventory_hostname_short == 'storage' and storage_backend == 'nfs'
   - include: ansible/proxy.yaml
     when: inventory_hostname_short == 'controller' and install_proxy

@@ -23,7 +23,6 @@ Addresses
     netmask_internal: 255.255.0.0
     address:
       controller: 10.100.50.10
-      nfs: 10.100.50.41
       network: 10.100.50.30
       shared: 10.100.50.50
       storage: 10.100.50.40

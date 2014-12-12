@@ -44,7 +44,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision 'ansible' do |ansible|
     ansible.playbook = 'playbook.yaml'
     ansible.extra_vars = {
-      install_proxy: CONFIG['proxy']['install']
+      install_proxy: CONFIG['proxy']['install'],
+      storage_backend: CONFIG['storage_backend']
     }
   end
 
@@ -89,17 +90,10 @@ Vagrant.configure(2) do |config|
         node.vm.network :public_network,
                         bridge: CONFIG['bridge_external'],
                         auto_config: false
+      elsif name == 'storage'
+        add_block_device(node, 1, CONFIG['resources']['storage'])
       end
     end
-  end
-
-  config.vm.define 'nfs' do |node|
-    node.vm.hostname = 'nfs'
-    node.vm.network :public_network,
-                    ip: CONFIG['address']['nfs'],
-                    netmask: CONFIG['netmask_internal'],
-                    bridge: CONFIG['bridge_internal']
-    add_block_device(node, 1, CONFIG['resources']['storage'])
   end
 
   config.vm.define 'controller', primary: true do |node|

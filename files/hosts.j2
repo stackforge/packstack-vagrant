@@ -2,7 +2,7 @@
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 # <<< Packstack >>>
-{% for name in ['controller', 'network', 'storage', 'nfs', 'shared'] %}
+{% for name in ['controller', 'network', 'storage', 'shared'] %}
 {{ address[name] }} {{ name }}
 {% endfor %}
 {% for ip in address['compute'] %}
