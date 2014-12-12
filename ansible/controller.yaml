@@ -32,3 +32,4 @@
   - /home/vagrant/patches/mongodb.pp
   - /home/vagrant/patches/nova_compute_libvirt.pp
 - copy: src=files/gitconfig dest=/home/vagrant/.gitconfig owner=vagrant group=vagrant mode=0644
+- file: src=/home/vagrant/.ssh/id_packstack dest=/home/vagrant/.ssh/id_rsa owner=vagrant group=vagrant state=link
