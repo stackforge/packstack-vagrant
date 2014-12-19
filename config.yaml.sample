@@ -15,7 +15,6 @@ storage_backend: nfs
 address:
   controller: 10.100.50.10
   network: 10.100.50.30
-  shared: 10.100.50.50
   storage: 10.100.50.40
   compute: 
   - 10.100.50.20
