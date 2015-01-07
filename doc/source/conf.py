@@ -32,7 +32,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'packstack-vagrant'
-copyright = u'2014, B1 Systems GmbH'
+copyright = u'2014-2015, B1 Systems GmbH'
 
 # If true, '()' will be appended to :func: etc. cross-reference text.
 add_function_parentheses = True
