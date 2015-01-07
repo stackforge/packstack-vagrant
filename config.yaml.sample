@@ -9,8 +9,8 @@ network_type: gre
 netmask_internal: 255.255.0.0
 proxy:
   address: 'http://proxy.company.site:3128'
-  install: true
-  use: true
+  install: false
+  use: false
 storage_backend: nfs
 address:
   controller: 10.100.50.10
