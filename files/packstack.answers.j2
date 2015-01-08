@@ -20,7 +20,7 @@ CONFIG_GLANCE_INSTALL=y
 
 # Set to 'y' if you would like Packstack to install OpenStack Block
 # Storage (Cinder)
-CONFIG_CINDER_INSTALL=y
+CONFIG_CINDER_INSTALL={{ 'y' if components.cinder == true else 'n' }}
 
 # Set to 'y' if you would like Packstack to install OpenStack Compute
 # (Nova)
@@ -32,19 +32,19 @@ CONFIG_NEUTRON_INSTALL=y
 
 # Set to 'y' if you would like Packstack to install OpenStack
 # Dashboard (Horizon)
-CONFIG_HORIZON_INSTALL=y
+CONFIG_HORIZON_INSTALL={{ 'y' if components.horizon == true else 'n' }}
 
 # Set to 'y' if you would like Packstack to install OpenStack Object
 # Storage (Swift)
-CONFIG_SWIFT_INSTALL=y
+CONFIG_SWIFT_INSTALL={{ 'y' if components.swift == true else 'n' }}
 
 # Set to 'y' if you would like Packstack to install OpenStack
 # Metering (Ceilometer)
-CONFIG_CEILOMETER_INSTALL=y
+CONFIG_CEILOMETER_INSTALL={{ 'y' if components.ceilometer == true else 'n' }}
 
 # Set to 'y' if you would like Packstack to install OpenStack
 # Orchestration (Heat)
-CONFIG_HEAT_INSTALL=y
+CONFIG_HEAT_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
 # Set to 'y' if you would like Packstack to install the OpenStack
 # Client packages. An admin "rc" file will also be installed
@@ -56,7 +56,7 @@ CONFIG_NTP_SERVERS={{ ntp | join(",") }}
 
 # Set to 'y' if you would like Packstack to install Nagios to monitor
 # OpenStack hosts
-CONFIG_NAGIOS_INSTALL=y
+CONFIG_NAGIOS_INSTALL={{ 'y' if components.nagios == true else 'n' }}
 
 # Comma separated list of servers to be excluded from installation in
 # case you are running Packstack the second time with the same answer
@@ -607,7 +607,7 @@ CONFIG_SWIFT_STORAGE_SIZE=2G
 CONFIG_PROVISION_DEMO=n
 
 # Whether to configure tempest for testing
-CONFIG_PROVISION_TEMPEST=y
+CONFIG_PROVISION_TEMPEST={{ 'y' if components.tempest == true else 'n' }}
 
 # The name of the Tempest Provisioning user. If you don't provide a
 # user name, Tempest will be configured in a standalone mode
@@ -640,7 +640,7 @@ CONFIG_HEAT_KS_PW=password
 
 # Set to 'y' if you would like Packstack to install Heat CloudWatch
 # API
-CONFIG_HEAT_CLOUDWATCH_INSTALL=y
+CONFIG_HEAT_CLOUDWATCH_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
 # Set to 'y' if you would like Packstack to install Heat with trusts
 # as deferred auth method. If not, the stored password method will be
@@ -649,7 +649,7 @@ CONFIG_HEAT_USING_TRUSTS=y
 
 # Set to 'y' if you would like Packstack to install Heat
 # CloudFormation API
-CONFIG_HEAT_CFN_INSTALL=n
+CONFIG_HEAT_CFN_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
 # Name of Keystone domain for Heat
 CONFIG_HEAT_DOMAIN=heat

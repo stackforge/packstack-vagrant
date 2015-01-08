@@ -28,3 +28,11 @@ resources:
   memory: 4096
   vcpus: 2
   storage: 65536
+components:
+  ceilometer: true
+  cinder: true
+  heat: true
+  horizon: true
+  nagios: true
+  swift: true
+  tempest: true
