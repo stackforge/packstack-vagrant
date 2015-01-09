@@ -5,6 +5,5 @@ bashate
 doc8
 docutils
 hacking
-oslosphinx
 pbr>=0.6,!=0.7,<1.0
-sphinx>=1.1.2,<1.2
+sphinx

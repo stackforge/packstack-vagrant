@@ -15,14 +15,6 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('../..'))
-# -- General configuration ----------------------------------------------------
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = [
-    'sphinx.ext.autodoc',
-    'oslosphinx'
-]
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -34,17 +26,11 @@ master_doc = 'index'
 project = u'packstack-vagrant'
 copyright = u'2014-2015, B1 Systems GmbH'
 
-# If true, '()' will be appended to :func: etc. cross-reference text.
-add_function_parentheses = True
-
-# If true, the current module name will be prepended to all description
-# unit titles (such as .. function::).
-add_module_names = True
-
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-# -- Options for HTML output --------------------------------------------------
-
 # Output file base name for HTML help builder.
 htmlhelp_basename = '%sdoc' % project
+
+# The "theme" that the HTML output should use.
+html_theme = "default"
