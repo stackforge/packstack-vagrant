@@ -35,6 +35,7 @@ components:
   horizon: true
   ironic: true
   nagios: true
+  sahara: true
   swift: true
   tempest: true
   trove: true

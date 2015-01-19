@@ -47,6 +47,10 @@ CONFIG_CEILOMETER_INSTALL={{ 'y' if components.ceilometer == true else 'n' }}
 CONFIG_HEAT_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
 # Set to 'y' if you would like Packstack to install OpenStack
+# Clustering (Sahara)
+CONFIG_SAHARA_INSTALL={{ 'y' if components.sahara == true else 'n' }}
+
+# Set to 'y' if you would like Packstack to install OpenStack
 # Database (Trove)
 CONFIG_TROVE_INSTALL={{ 'y' if components.trove == true else 'n' }}
 
@@ -113,6 +117,10 @@ CONFIG_VCENTER_CLUSTER_NAME=
 # OpenStack services specific to storage servers such as Glance and
 # Cinder.
 CONFIG_STORAGE_HOST={{ address.storage }}
+
+# (Unsupported!) The IP address of the server on which to install
+# OpenStack services specific to Sahara
+CONFIG_SAHARA_HOST={{ address.controller }}
 
 # To subscribe each server to EPEL enter "y"
 CONFIG_USE_EPEL=n
@@ -672,6 +680,12 @@ CONFIG_HEAT_DOMAIN_ADMIN=heat_admin
 
 # Password for Keystone domain admin user for Heat
 CONFIG_HEAT_DOMAIN_PASSWORD=password
+
+# The password to use for the Sahara DB access
+CONFIG_SAHARA_DB_PW=PW_PLACEHOLDER
+
+# The password to use for Sahara to authenticate with Keystone
+CONFIG_SAHARA_KS_PW=PW_PLACEHOLDER
 
 # The password to use for the Trove DB access
 CONFIG_TROVE_DB_PW=password
