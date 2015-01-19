@@ -46,6 +46,10 @@ CONFIG_CEILOMETER_INSTALL={{ 'y' if components.ceilometer == true else 'n' }}
 # Orchestration (Heat)
 CONFIG_HEAT_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
+# Set to 'y' if you would like Packstack to install OpenStack
+# Database (Trove)
+CONFIG_TROVE_INSTALL={{ 'y' if components.trove == true else 'n' }}
+
 # Set to 'y' if you would like Packstack to install the OpenStack
 # Client packages. An admin "rc" file will also be installed
 CONFIG_CLIENT_INSTALL=y
@@ -659,6 +663,21 @@ CONFIG_HEAT_DOMAIN_ADMIN=heat_admin
 
 # Password for Keystone domain admin user for Heat
 CONFIG_HEAT_DOMAIN_PASSWORD=password
+
+# The password to use for the Trove DB access
+CONFIG_TROVE_DB_PW=password
+
+# The password to use for Trove to authenticate with Keystone
+CONFIG_TROVE_KS_PW=password
+
+# The user to use when Trove connects to Nova
+CONFIG_TROVE_NOVA_USER=admin
+
+# The tenant to use when Trove connects to Nova
+CONFIG_TROVE_NOVA_TENANT=services
+
+# The password to use when Trove connects to Nova
+CONFIG_TROVE_NOVA_PW=password
 
 # Secret key for signing metering messages
 CONFIG_CEILOMETER_SECRET=password

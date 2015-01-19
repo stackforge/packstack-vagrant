@@ -36,3 +36,4 @@ components:
   nagios: true
   swift: true
   tempest: true
+  trove: true
