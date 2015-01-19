@@ -154,11 +154,13 @@ overwritten when installing Squid as local HTTP proxy.
 Components
 ----------
 
-By default all available components will be installed. It is possible to
-disable the components ``ceilometer``, ``cinder``, ``heat``, ``horizon``,
-``ironic``, ``nagios``, ``sahara``, ``swift``, ``tempest``, and ``trove``.
+It is possible to enable or disable the components ``ceilometer``, ``cinder``,
+``heat``, ``horizon``, ``ironic``, ``nagios``, ``sahara``, ``swift``,
+``tempest``, and ``trove``.
 
 For example to disable the component ``heat`` set ``heat`` to ``false``.
+
+For example to enable the component ``trove`` set ``trove`` to ``true``.
 
 ::
 
@@ -167,9 +169,9 @@ For example to disable the component ``heat`` set ``heat`` to ``false``.
     cinder: true
     heat: true
     horizon: true
-    ironic: true
+    ironic: false
     nagios: true
-    sahara: true
+    sahara: false
     swift: true
-    tempest: true
-    trove: true
+    tempest: false
+    trove: false

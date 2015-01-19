@@ -33,9 +33,9 @@ components:
   cinder: true
   heat: true
   horizon: true
-  ironic: true
+  ironic: false
   nagios: true
-  sahara: true
+  sahara: false
   swift: true
-  tempest: true
-  trove: true
+  tempest: false
+  trove: false
