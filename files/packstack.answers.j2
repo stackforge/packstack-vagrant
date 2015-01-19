@@ -50,6 +50,10 @@ CONFIG_HEAT_INSTALL={{ 'y' if components.heat == true else 'n' }}
 # Database (Trove)
 CONFIG_TROVE_INSTALL={{ 'y' if components.trove == true else 'n' }}
 
+# Set to 'y' if you would like Packstack to install OpenStack Bare
+# # Metal (Ironic)
+CONFIG_IRONIC_INSTALL={{ 'y' if components.ironic == true else 'n' }}
+
 # Set to 'y' if you would like Packstack to install the OpenStack
 # Client packages. An admin "rc" file will also be installed
 CONFIG_CLIENT_INSTALL=y
@@ -396,6 +400,11 @@ CONFIG_CINDER_NETAPP_WEBSERVICE_PATH=/devmgr/v2
 # list of disk pool names to be used for provisioning.  Defaults to
 # ''.
 CONFIG_CINDER_NETAPP_STORAGE_POOLS=
+
+CONFIG_IRONIC_DB_PW=password
+
+# The password to use for Ironic to authenticate with Keystone
+CONFIG_IRONIC_KS_PW=password
 
 # The password to use for the Nova to access DB
 CONFIG_NOVA_DB_PW=password

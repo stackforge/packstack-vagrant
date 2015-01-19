@@ -33,6 +33,7 @@ components:
   cinder: true
   heat: true
   horizon: true
+  ironic: true
   nagios: true
   swift: true
   tempest: true

@@ -156,7 +156,7 @@ Components
 
 By default all available components will be installed. It is possible to
 disable the components ``ceilometer``, ``cinder``, ``heat``, ``horizon``,
-``nagios``, ``swift``, ``tempest``, and ``trove``.
+``ironic``, ``nagios``, ``swift``, ``tempest``, and ``trove``.
 
 For example to disable the component ``heat`` set ``heat`` to ``false``.
 
@@ -167,6 +167,7 @@ For example to disable the component ``heat`` set ``heat`` to ``false``.
     cinder: true
     heat: true
     horizon: true
+    ironic: true
     nagios: true
     swift: true
     tempest: true
