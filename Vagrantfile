@@ -20,19 +20,23 @@ unless defined? CONFIG
   CONFIG = YAML.load(File.open(configuration_file, File::RDONLY).read)
 end
 
+CONFIG['box'] = {} unless CONFIG.key?('box')
+CONFIG['box']['name'] = 'b1-systems/centos-packstack' unless CONFIG['box'].key?('name')
+CONFIG['box']['storage_controller'] = 'SATA Controller' unless CONFIG['box'].key?('storage_controller')
+
 def add_block_device(node, port, size)
   node.vm.provider 'virtualbox' do |vb|
     vb.customize ['createhd', '--filename', "#{node.vm.hostname}_#{port}.vdi",
                   '--size', size]
     vb.customize ['storageattach', :id, '--storagectl',
-                  CONFIG['box_storage_controller'], '--port', port,
+                  CONFIG['box']['storage_controller'], '--port', port,
                   '--device', 0, '--type', 'hdd', '--medium',
                   "#{node.vm.hostname}_#{port}.vdi"]
   end
 end
 
 Vagrant.configure(2) do |config|
-  config.vm.box = CONFIG['box']
+  config.vm.box = CONFIG['box']['name']
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.vm.provider 'virtualbox' do |vb|
     vb.customize ['modifyvm', :id, '--memory', CONFIG['resources']['memory']]

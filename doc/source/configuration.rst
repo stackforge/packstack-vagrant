@@ -12,7 +12,8 @@ CentOS. By default the box ``centos-packstack`` will be used.
 
 ::
 
-    box: b1-systems/centos-packstack
+    box:
+      name: b1-systems/centos-packstack
 
 ``centos-packstack`` is a customized version of
 `boxcutter/centos70 <https://github.com/box-cutter/centos-vm>`__. The
@@ -21,13 +22,19 @@ CentOS. By default the box ``centos-packstack`` will be used.
 repository and the box iself on
 `Atlas <https://atlas.hashicorp.com/b1-systems/centos-packstack>`__.
 
-To change the used base box modify the value of ``box``. A list
+To change the used base box modify the value of ``name``. A list
 of public available boxes is available on
 `Atlas <https://atlas.hashicorp.com/>`__.
 
 Depending on the used base box you have to set the used storage
-controller (normally ``IDE Controller`` or ``SATA Controller``). The
+controller (``SATA Controller`` by default). The
 storage controller of the used base box must support at least three ports.
+
+::
+
+    box:
+      name: b1-systems/centos-packstack
+      storage_controller: 'SATA Controller'
 
 
 Networking

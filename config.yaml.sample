@@ -1,6 +1,7 @@
 ---
-box: b1-systems/centos-packstack
-box_storage_controller: 'SATA Controller'
+box:
+  name: b1-systems/centos-packstack
+  storage_controller: 'SATA Controller'
 development: false
 bridge_internal: tap0
 bridge_external: tap1
