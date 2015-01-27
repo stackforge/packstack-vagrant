@@ -10,7 +10,7 @@ run() {
     number=$1
     shift
     python scripts/get_hosts.py | grep -v controller | xargs -n 1 -P $number \
-        -I BOX sh -c "echo - BOX && (vagrant $* BOX 2>&1 >> log/BOX.log)"
+        -I BOX sh -c "echo - BOX && (vagrant $* BOX 2>&1 | tee -a log/BOX.log)"
 }
 
 if [[ ! -e config.yaml ]]; then
@@ -20,11 +20,12 @@ fi
 
 echo "$(date) cleaning up"
 rm -f log/*
-vagrant destroy
+vagrant destroy --force
 
-echo "$(date) bringign up, provisioning and reloading the controller VM"
-vagrant up controller >> log/controller.log
-vagrant reload controller >> log/controller.log
+echo "$(date) bringing up, provisioning and reloading the controller VM"
+logfile=log/controller.log
+vagrant up controller | tee -a $logfile
+vagrant reload controller | tee -a $logfile
 
 echo "$(date) brining up all VMs"
 run $p up --no-provision
@@ -36,4 +37,8 @@ echo "$(date) reloading all other VMs"
 run $p reload
 
 echo "$(date) initializing the controller node"
-vagrant ssh controller -c '/home/vagrant/scripts/initialize.sh' 2>&1 >> log/controller.log
+logfile=log/controller.log
+vagrant ssh controller -c '/home/vagrant/scripts/initialize.sh' 2>&1 | tee -a $logfile
+
+echo "$(date) getting status of all VMs"
+vagrant status

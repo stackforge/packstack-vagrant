@@ -7,6 +7,10 @@ First run the ``bootstrap.sh`` script to prepare all required nodes.
 
     $ ./scripts/bootstrap.sh
 
+- A logfile for each node will be created in the directory ``log``.
+- It will take a long time (approximately 30 minutes, depends on your
+  local environment) to boostrap all required nodes.
+
 Afterwards run the following command on the controller node
 (``vagrant ssh controller``) to deploy OpenStack with Packstack.
 
