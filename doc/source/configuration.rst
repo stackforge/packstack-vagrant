@@ -4,6 +4,32 @@ Configuration
 Copy the sample configuration file ``config.yaml.sample`` to
 ``config.yaml`` and adjust the file accordingly.
 
+Base box
+--------
+
+In theory (not tested) it is possible to use RHEL or Fedora instead of
+CentOS. By default the box ``centos-packstack`` will be used.
+
+::
+
+    box: b1-systems/centos-packstack
+
+``centos-packstack`` is a customized version of
+`boxcutter/centos70 <https://github.com/box-cutter/centos-vm>`__. The
+`Packer <https://packer.io/>`__ template is available in the
+`stackforge/packstack-vagrant <https://github.com/stackforge/packstack-vagrant/tree/master/packer>`__
+repository and the box iself on
+`Atlas <https://atlas.hashicorp.com/b1-systems/centos-packstack>`__.
+
+To change the used base box modify the value of ``box``. A list
+of public available boxes is available on
+`Atlas <https://atlas.hashicorp.com/>`__.
+
+Depending on the used base box you have to set the used storage
+controller (normally ``IDE Controller`` or ``SATA Controller``). The
+storage controller of the used base box must support at least three ports.
+
+
 Networking
 ----------
 
@@ -80,26 +106,6 @@ Development version
 
 To use the development version (``master``) of Packstack set
 ``development: true``.
-
-Vagrant base box
-----------------
-
-In theory (not tested) it is possible to use RHEL or Fedora instead of
-CentOS. Default is ``b1-systems/centos-packstack``, a customized
-Vagrantbox based on
-`boxcutter/centos70 <https://github.com/box-cutter/centos-vm>`__. The
-sources of the used `Packer <https://packer.io/>`__ template is
-available on `Github <https://github.com/b1-systems/packer-templates>`__
-and the box iself on
-`Atlas <https://atlas.hashicorp.com/b1-systems/centos-packstack>`__.
-
-To change the used Vagrant base box modify the value of ``box``. A list
-of public available Vagrant boxes is available on
-`Atlas <https://atlas.hashicorp.com/>`__.
-
-Depending on the used base box you have to set the used storage
-controller (normally ``IDE Controller`` or ``SATA Controller``). The
-storage controller of the base box must support at least three ports.
 
 Storage backend
 ---------------
