@@ -10,6 +10,14 @@ glance image-create --name "Debian Jessie" --disk-format qcow2 --container-forma
 nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
 nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
 nova keypair-add --pub_key /home/vagrant/.ssh/id_rsa.pub default
+nova flavor-show m1.nano > /dev/null
+if [[ $? -ne 0 ]]; then
+    nova flavor-create m1.nano 42 64 0 1
+fi
+nova flavor-show m1.micro > /dev/null
+if [[ $? -ne 0 ]]; then
+    nova flavor-create m1.micro 84 128 0 1
+fi
 neutron net-create internal001
 neutron subnet-create --name internal001 internal001 192.168.200.0/24
 neutron router-create internal001
