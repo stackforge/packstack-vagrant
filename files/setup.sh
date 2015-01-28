@@ -6,6 +6,7 @@ glance image-create --name "Fedora 21" --disk-format qcow2 --container-format ba
 glance image-create --name "Ubuntu 14.04" --disk-format qcow2 --container-format bare --is-public True --copy https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
 glance image-create --name "CentOS 7" --disk-format qcow2 --container-format bare --is-public True --copy http://cloud.centos.org/centos/7/devel/CentOS-7-x86_64-GenericCloud.qcow2
 glance image-create --name "Cirros 0.3.3" --disk-format qcow2 --container-format bare --is-public True --copy http://download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img
+glance image-create --name "Debian Jessie" --disk-format qcow2 --container-format bare --is-public True --copy http://cdimage.debian.org/cdimage/openstack/testing/debian-testing-openstack-amd64.qcow2
 nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
 nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
 nova keypair-add --pub_key /home/vagrant/.ssh/id_rsa.pub default
