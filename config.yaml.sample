@@ -8,6 +8,7 @@ bridge_external: tap1
 network_agent: openvswitch
 network_type: gre
 netmask_internal: 255.255.0.0
+secret: password
 proxy:
   address: 'http://proxy.company.site:3128'
   install: false

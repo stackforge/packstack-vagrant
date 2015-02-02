@@ -9,7 +9,7 @@ CONFIG_SSH_KEY=/home/vagrant/.ssh/id_packstack.pub
 # Set a default password everywhere. The default password will be
 # overriden by whatever password is set for each individual service or
 # user.
-CONFIG_DEFAULT_PASSWORD=password
+CONFIG_DEFAULT_PASSWORD={{ secret }}
 
 # Set to 'y' if you would like Packstack to install MariaDB
 CONFIG_MARIADB_INSTALL=y
@@ -221,7 +221,7 @@ CONFIG_AMQP_SSL_SELF_SIGNED=y
 CONFIG_AMQP_AUTH_USER=amqp_user
 
 # Password for user authentication
-CONFIG_AMQP_AUTH_PASSWORD=password
+CONFIG_AMQP_AUTH_PASSWORD={{ secret }}
 
 # The IP address of the server on which to install MariaDB or IP
 # address of DB server to use if MariaDB installation was not selected
@@ -231,22 +231,22 @@ CONFIG_MARIADB_HOST={{ address.controller }}
 CONFIG_MARIADB_USER=root
 
 # Password for the MariaDB admin user
-CONFIG_MARIADB_PW=password
+CONFIG_MARIADB_PW={{ secret }}
 
 # The password to use for the Keystone to access DB
-CONFIG_KEYSTONE_DB_PW=password
+CONFIG_KEYSTONE_DB_PW={{ secret }}
 
 # Region name
 CONFIG_KEYSTONE_REGION=RegionOne
 
 # The token to use for the Keystone service api
-CONFIG_KEYSTONE_ADMIN_TOKEN=password
+CONFIG_KEYSTONE_ADMIN_TOKEN={{ secret }}
 
 # The password to use for the Keystone admin user
-CONFIG_KEYSTONE_ADMIN_PW=password
+CONFIG_KEYSTONE_ADMIN_PW={{ secret }}
 
 # The password to use for the Keystone demo user
-CONFIG_KEYSTONE_DEMO_PW=password
+CONFIG_KEYSTONE_DEMO_PW={{ secret }}
 
 # Kestone token format. Use either UUID or PKI
 CONFIG_KEYSTONE_TOKEN_FORMAT=UUID
@@ -255,10 +255,10 @@ CONFIG_KEYSTONE_TOKEN_FORMAT=UUID
 CONFIG_KEYSTONE_SERVICE_NAME=keystone
 
 # The password to use for the Glance to access DB
-CONFIG_GLANCE_DB_PW=password
+CONFIG_GLANCE_DB_PW={{ secret }}
 
 # The password to use for the Glance to authenticate with Keystone
-CONFIG_GLANCE_KS_PW=password
+CONFIG_GLANCE_KS_PW={{ secret }}
 
 # Glance storage backend controls how Glance stores disk images.
 # Supported values: file, swift. Note that Swift installation have to
@@ -267,10 +267,10 @@ CONFIG_GLANCE_KS_PW=password
 CONFIG_GLANCE_BACKEND=file
 
 # The password to use for the Cinder to access DB
-CONFIG_CINDER_DB_PW=password
+CONFIG_CINDER_DB_PW={{ secret }}
 
 # The password to use for the Cinder to authenticate with Keystone
-CONFIG_CINDER_KS_PW=password
+CONFIG_CINDER_KS_PW={{ secret }}
 
 # The Cinder backend to use, valid options are: lvm, gluster, nfs,
 # netapp
@@ -409,16 +409,16 @@ CONFIG_CINDER_NETAPP_WEBSERVICE_PATH=/devmgr/v2
 # ''.
 CONFIG_CINDER_NETAPP_STORAGE_POOLS=
 
-CONFIG_IRONIC_DB_PW=password
+CONFIG_IRONIC_DB_PW={{ secret }}
 
 # The password to use for Ironic to authenticate with Keystone
-CONFIG_IRONIC_KS_PW=password
+CONFIG_IRONIC_KS_PW={{ secret }}
 
 # The password to use for the Nova to access DB
-CONFIG_NOVA_DB_PW=password
+CONFIG_NOVA_DB_PW={{ secret }}
 
 # The password to use for the Nova to authenticate with Keystone
-CONFIG_NOVA_KS_PW=password
+CONFIG_NOVA_KS_PW={{ secret }}
 
 # The overcommitment ratio for virtual to physical CPUs. Set to 1.0
 # to disable CPU overcommitment
@@ -469,10 +469,10 @@ CONFIG_NOVA_NETWORK_NUMBER=1
 CONFIG_NOVA_NETWORK_SIZE=255
 
 # The password to use for Neutron to authenticate with Keystone
-CONFIG_NEUTRON_KS_PW=password
+CONFIG_NEUTRON_KS_PW={{ secret }}
 
 # The password to use for Neutron to access DB
-CONFIG_NEUTRON_DB_PW=password
+CONFIG_NEUTRON_DB_PW={{ secret }}
 
 # The name of the bridge that the Neutron L3 agent will use for
 # external traffic, or 'provider' if using provider networks
@@ -483,7 +483,7 @@ CONFIG_NEUTRON_L3_EXT_BRIDGE=br-ex
 CONFIG_NEUTRON_L2_PLUGIN=ml2
 
 # Neutron metadata agent password
-CONFIG_NEUTRON_METADATA_PW=password
+CONFIG_NEUTRON_METADATA_PW={{ secret }}
 
 # Set to 'y' if you would like Packstack to install Neutron LBaaS
 CONFIG_LBAAS_INSTALL=y
@@ -597,7 +597,7 @@ CONFIG_SSL_KEY=
 CONFIG_SSL_CACHAIN=
 
 # The password to use for the Swift to authenticate with Keystone
-CONFIG_SWIFT_KS_PW=password
+CONFIG_SWIFT_KS_PW={{ secret }}
 
 # A comma separated list of devices which to use as Swift Storage
 # device. Each entry should take the format /path/to/dev, for example
@@ -618,7 +618,7 @@ CONFIG_SWIFT_STORAGE_REPLICAS=2
 CONFIG_SWIFT_STORAGE_FSTYPE=xfs
 
 # Shared secret for Swift
-CONFIG_SWIFT_HASH=password
+CONFIG_SWIFT_HASH={{ secret }}
 
 # Size of the swift loopback file storage device
 CONFIG_SWIFT_STORAGE_SIZE=2G
@@ -635,7 +635,7 @@ CONFIG_PROVISION_TEMPEST={{ 'y' if components.tempest == true else 'n' }}
 CONFIG_PROVISION_TEMPEST_USER=
 
 # The password to use for the Tempest Provisioning user
-CONFIG_PROVISION_TEMPEST_USER_PW=password
+CONFIG_PROVISION_TEMPEST_USER_PW={{ secret }}
 
 # The CIDR network address for the floating IP subnet
 CONFIG_PROVISION_DEMO_FLOATRANGE=172.24.4.224/28
@@ -651,13 +651,13 @@ CONFIG_PROVISION_TEMPEST_REPO_REVISION=master
 CONFIG_PROVISION_ALL_IN_ONE_OVS_BRIDGE=n
 
 # The password used by Heat user to authenticate against MySQL
-CONFIG_HEAT_DB_PW=password
+CONFIG_HEAT_DB_PW={{ secret }}
 
 # The encryption key to use for authentication info in database
 # CONFIG_HEAT_AUTH_ENC_KEY=
 
 # The password to use for the Heat to authenticate with Keystone
-CONFIG_HEAT_KS_PW=password
+CONFIG_HEAT_KS_PW={{ secret }}
 
 # Set to 'y' if you would like Packstack to install Heat CloudWatch
 # API
@@ -679,19 +679,19 @@ CONFIG_HEAT_DOMAIN=heat
 CONFIG_HEAT_DOMAIN_ADMIN=heat_admin
 
 # Password for Keystone domain admin user for Heat
-CONFIG_HEAT_DOMAIN_PASSWORD=password
+CONFIG_HEAT_DOMAIN_PASSWORD={{ secret }}
 
 # The password to use for the Sahara DB access
-CONFIG_SAHARA_DB_PW=PW_PLACEHOLDER
+CONFIG_SAHARA_DB_PW={{ secret }}
 
 # The password to use for Sahara to authenticate with Keystone
-CONFIG_SAHARA_KS_PW=PW_PLACEHOLDER
+CONFIG_SAHARA_KS_PW={{ secret }}
 
 # The password to use for the Trove DB access
-CONFIG_TROVE_DB_PW=password
+CONFIG_TROVE_DB_PW={{ secret }}
 
 # The password to use for Trove to authenticate with Keystone
-CONFIG_TROVE_KS_PW=password
+CONFIG_TROVE_KS_PW={{ secret }}
 
 # The user to use when Trove connects to Nova
 CONFIG_TROVE_NOVA_USER=admin
@@ -700,16 +700,16 @@ CONFIG_TROVE_NOVA_USER=admin
 CONFIG_TROVE_NOVA_TENANT=services
 
 # The password to use when Trove connects to Nova
-CONFIG_TROVE_NOVA_PW=password
+CONFIG_TROVE_NOVA_PW={{ secret }}
 
 # Secret key for signing metering messages
-CONFIG_CEILOMETER_SECRET=password
+CONFIG_CEILOMETER_SECRET={{ secret }}
 
 # The password to use for Ceilometer to authenticate with Keystone
-CONFIG_CEILOMETER_KS_PW=password
+CONFIG_CEILOMETER_KS_PW={{ secret }}
 
 # The IP address of the server on which to install MongoDB
 CONFIG_MONGODB_HOST={{ address.controller }}
 
 # The password of the nagiosadmin user on the Nagios server
-CONFIG_NAGIOS_PW=password
+CONFIG_NAGIOS_PW={{ secret }}

@@ -188,3 +188,14 @@ For example to enable the component ``trove`` set ``trove`` to ``true``.
     swift: true
     tempest: false
     trove: false
+
+Passwords and tokens
+--------------------
+
+For simplification ``packstack-vagrant`` uses the same secret for all used
+passwords and tokens. By default this secret is ``password``. To change the
+secret change the value of the parameter ``secret``.
+
+::
+
+  secret: password
