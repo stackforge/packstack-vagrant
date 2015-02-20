@@ -3,9 +3,9 @@
 
 # <<< Packstack >>>
 {% for name in ['controller', 'network', 'storage'] %}
-{{ address[name] }} {{ name }}
+{{ address[name] }} {{ name }}.site {{ name }}
 {% endfor %}
 {% for ip in address['compute'] %}
-{{ ip }} compute{{ loop.index }} 
+{{ ip }} compute{{ loop.index }}.site compute{{ loop.index }}
 {% endfor %}
 # >>> Packstack <<<

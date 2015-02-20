@@ -13,6 +13,16 @@ Ensure to use at least version ``1.7.2`` of Vagrant.
     $ vagrant --version
     Vagrant 1.7.2
 
+Vagrant plugins
+~~~~~~~~~~~~~~~
+
+If you want to use an external HTTP proxy server for caching/proxying install
+the Vagrant plugin ``vagrant-proxyconf``.
+
+::
+
+    $ vagrant plugin install vagrant-proxyconf
+
 Ansible
 -------
 
@@ -22,13 +32,3 @@ to start this Vagrant environment install Ansible on the Vagrant host.
 ::
 
     $ sudo yum install -y ansible
-
-PyYAML
-------
-
-A helper script (`scripts/get_hosts.py`) requires the Python library
-`PyYAML <https://pypi.python.org/pypi/PyYAML/3.11>`__.
-
-::
-
-    $ sudo yum install -y PyYAML

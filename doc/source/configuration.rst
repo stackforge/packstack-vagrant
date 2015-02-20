@@ -139,30 +139,12 @@ configures a HTTP proxy to be used by ``yum``.
     $ vagrant plugin install vagrant-proxyconf
 
 When the plugin is installed caching/proxying is not enabled by default. To
-enable caching/proxying set ``use`` to ``true``.
-
-``address`` has to point to an existing HTTP proxy server (e.g.
-``http://proxy.company.site:3128``).
+enable caching/proxying ``proxy`` has to point to an existing HTTP proxy
+server.
 
 ::
 
-  proxy:
-    use: true
-    install: false
-    address: 'http://proxy.company.site:3128'
-
-To install the HTTP proxy `Squid <http://www.squid-cache.org/>`__ on the
-controller node set ``install`` to ``true``.
-
-To use the local proxy set ``use`` to ``true``.  ``address`` has not to
-be set when installing Squid on the controller node. ``address`` will be
-overwritten when installing Squid as local HTTP proxy.
-
-::
-
-  proxy:
-    install: true
-    use: true
+  proxy: http://proxy.company.site:3128
 
 Components
 ----------

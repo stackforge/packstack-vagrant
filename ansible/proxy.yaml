@@ -1,4 +1,0 @@
----
-- yum: name=squid state=present
-- copy: src=files/squid.conf dest=/etc/squid/squid.conf
-- service: name=squid state=started enabled=yes

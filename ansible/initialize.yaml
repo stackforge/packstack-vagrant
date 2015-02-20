@@ -5,7 +5,6 @@
 - copy: src=files/id_rsa.pub dest=/home/vagrant/.ssh/id_packstack.pub mode=0600 owner=vagrant group=vagrant
 - copy: src=files/selinux dest=/etc/selinux/config mode=0644 owner=root group=root
 - file: path=/home/vagrant/scripts state=directory owner=vagrant group=vagrant mode=0755
-- copy: src=files/disable_network_manager.sh dest=/home/vagrant/scripts/disable_network_manager.sh mode=0755 owner=vagrant group=vagrant
 - shell: cat /home/vagrant/.ssh/id_packstack.pub >> /home/vagrant/.ssh/authorized_keys
 - file: path=/home/vagrant/.ssh/authorized_keys owner=vagrant group=vagrant
 - copy: src=files/motd dest=/etc/motd owner=root group=root mode=0644

@@ -4,6 +4,10 @@ for node in $(sed -n '/<<< Packstack >>>/{:a;n;/>>> Packstack <<</b;p;ba}' /etc/
     ssh-keyscan $node >> /home/vagrant/.ssh/known_hosts
 done
 
+for node in $(sed -n '/<<< Packstack >>>/{:a;n;/>>> Packstack <<</b;p;ba}' /etc/hosts | awk '{ print $3 }'); do
+    ssh-keyscan $node >> /home/vagrant/.ssh/known_hosts
+done
+
 chown vagrant:vagrant /home/vagrant/.ssh/known_hosts
 
 for node in $(sed -n '/<<< Packstack >>>/{:a;n;/>>> Packstack <<</b;p;ba}' /etc/hosts | awk '{ print $2 }'); do
