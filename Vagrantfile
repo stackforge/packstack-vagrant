@@ -41,7 +41,6 @@ Vagrant.configure(2) do |config|
   config.vm.provider 'virtualbox' do |vb|
     vb.customize ['modifyvm', :id, '--memory', CONFIG['resources']['memory']]
     vb.customize ['modifyvm', :id, '--cpus', CONFIG['resources']['vcpus']]
-    vb.customize ['modifyvm', :id, '--pagefusion', 'on']
     vb.customize ['modifyvm', :id, '--largepages', 'on']
     vb.customize ['modifyvm', :id, '--pae', 'off']
   end
