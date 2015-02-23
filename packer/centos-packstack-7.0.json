@@ -32,6 +32,7 @@
       "scripts/vbox.sh",
       "scripts/sshd.sh",
       "scripts/vagrant.sh",
+      "scripts/packstack.sh",
       "scripts/cleanup.sh"
     ]
   }],
