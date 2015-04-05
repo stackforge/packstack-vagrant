@@ -6,6 +6,6 @@
 - copy: src=files/exports dest=/etc/exports mode=0644 owner=root group=root
 - service: name=rpcbind state=started enabled=yes
 - service: name=nfs-server state=started enabled=yes
-- service: name=nfs-lock state=started enabled=yes
-- service: name=nfs-idmap state=started enabled=yes
-- command: exportfs -a
+- service: name=rpc-statd state=started enabled=yes
+- service: name=nfs-idmapd state=started enabled=yes
+- command: /usr/sbin/exportfs -a

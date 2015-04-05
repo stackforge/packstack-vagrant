@@ -4,8 +4,8 @@
     "vm_name": "centos-packstack",
     "type": "virtualbox-iso",
     "http_directory": "http",
-    "iso_url": "http://ftp.halifax.rwth-aachen.de/centos/7.0.1406/isos/x86_64/CentOS-7.0-1406-x86_64-DVD.iso",
-    "iso_checksum": "713ea7847adcdd1700e92429f212721a",
+    "iso_url": "http://ftp.halifax.rwth-aachen.de/centos/7.1.1503/isos/x86_64/CentOS-7-x86_64-DVD-1503-01.iso",
+    "iso_checksum": "99e450fb1b22d2e528757653fcbf5fdc",
     "iso_checksum_type": "md5",
     "guest_os_type": "RedHat_64",
     "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
@@ -39,6 +39,6 @@
   "post-processors": [{
     "type": "vagrant",
     "keep_input_artifact": false,
-    "output": "centos-packstack-7.0.box"
+    "output": "centos-packstack-7.1.box"
   }]
 }
