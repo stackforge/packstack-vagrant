@@ -32,3 +32,17 @@ to start this Vagrant environment install Ansible on the Vagrant host.
 ::
 
     $ sudo yum install -y ansible
+
+Packer
+------
+
+The installation of `Packer <https://packer.io/>`__ is optional and only
+necessary to build the Vagrant base box ``centos-packstack``
+`provided on Atlas <https://atlas.hashicorp.com/b1-systems/boxes/centos-packstack>`__
+on a local system.
+
+The installation is documented in the
+`Packer documentation <https://packer.io/docs/installation.html`__.
+
+To build the Vagrant base box run
+``/opt/packer/packer build packer/centos-packstack-7.1.json``.
