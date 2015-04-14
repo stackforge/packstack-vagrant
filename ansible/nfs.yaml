@@ -6,6 +6,12 @@
 - copy: src=files/exports dest=/etc/exports mode=0644 owner=root group=root
 - service: name=rpcbind state=started enabled=yes
 - service: name=nfs-server state=started enabled=yes
+- service: name=nfs-lock state=started enabled=yes
+  when: ansible_distribution_version == '7.0.1406'
 - service: name=rpc-statd state=started enabled=yes
+  when: ansible_distribution_version == '7.1.1503'
+- service: name=nfs-idmap state=started enabled=yes
+  when: ansible_distribution_version == '7.0.1406'
 - service: name=nfs-idmapd state=started enabled=yes
+  when: ansible_distribution_version == '7.1.1503'
 - command: /usr/sbin/exportfs -a

@@ -85,9 +85,6 @@ Vagrant.configure(2) do |config|
         node.vm.network :private_network,
                         ip: '10.0.0.30',
                         virtualbox__intnet: 'tunnel'
-        node.vm.network :public_network,
-                        bridge: CONFIG['bridge_external'],
-                        auto_config: false
       elsif name == 'storage'
         add_block_device(node, 1, CONFIG['resources']['storage'])
       end

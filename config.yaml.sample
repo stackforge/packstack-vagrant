@@ -1,10 +1,9 @@
 ---
 box:
-  name: b1-systems/centos-packstack
+  name: boxcutter/centos71
   storage_controller: 'SATA Controller'
 development: false
 bridge_internal: tap0
-bridge_external: tap1
 network_agent: openvswitch
 network_type: gre
 netmask_internal: 255.255.0.0

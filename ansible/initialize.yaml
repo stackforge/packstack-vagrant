@@ -1,6 +1,8 @@
 ---
 - lineinfile: dest=/etc/yum/pluginconf.d/fastestmirror.conf regexp=^enabled= line=enabled=0
 - yum: name=* state=latest
+- yum: name=http://rdo.fedorapeople.org/rdo-release.rpm state=present
+- yum: name=openstack-selinux state=present
 - copy: src=files/id_rsa dest=/home/vagrant/.ssh/id_packstack mode=0600 owner=vagrant group=vagrant
 - copy: src=files/id_rsa.pub dest=/home/vagrant/.ssh/id_packstack.pub mode=0600 owner=vagrant group=vagrant
 - copy: src=files/selinux dest=/etc/selinux/config mode=0644 owner=root group=root

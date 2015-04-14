@@ -8,19 +8,12 @@ Base box
 --------
 
 In theory (not tested) it is possible to use RHEL or Fedora instead of
-CentOS. By default the box ``centos-packstack`` will be used.
+CentOS. By default the box ``boxcutter/centos71`` will be used.
 
 ::
 
     box:
-      name: b1-systems/centos-packstack
-
-``centos-packstack`` is a customized version of
-`boxcutter/centos70 <https://github.com/box-cutter/centos-vm>`__. The
-`Packer <https://packer.io/>`__ template is available in the
-`stackforge/packstack-vagrant <https://github.com/stackforge/packstack-vagrant/tree/master/packer>`__
-repository and the box iself on
-`Atlas <https://atlas.hashicorp.com/b1-systems/centos-packstack>`__.
+      name: boxcutter/centos71
 
 To change the used base box modify the value of ``name``. A list
 of public available boxes is available on
@@ -33,7 +26,7 @@ storage controller of the used base box must support at least three ports.
 ::
 
     box:
-      name: b1-systems/centos-packstack
+      name: boxcutter/centos71
       storage_controller: 'SATA Controller'
 
 
@@ -46,7 +39,6 @@ Bridges
 ::
 
     bridge_internal: tap0
-    bridge_external: tap1
 
 Addresses
 ~~~~~~~~~
