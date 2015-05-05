@@ -1,715 +1,1097 @@
 [general]
 
-# Path to a Public key to install on servers. If a usable key has not
-# been installed on the remote servers the user will be prompted for a
-# password and this key will be installed so the password will not be
-# required again
+# Path to a public key to install on servers. If a usable key has not
+# been installed on the remote servers, the user is prompted for a
+# password and this key is installed so the password will not be
+# required again.
 CONFIG_SSH_KEY=/home/vagrant/.ssh/id_packstack.pub
 
-# Set a default password everywhere. The default password will be
-# overriden by whatever password is set for each individual service or
-# user.
+# Default password to be used everywhere (overridden by passwords set
+# for individual services or users).
 CONFIG_DEFAULT_PASSWORD={{ secret }}
 
-# Set to 'y' if you would like Packstack to install MariaDB
+# Specify 'y' to install MariaDB. ['y', 'n']
 CONFIG_MARIADB_INSTALL=y
 
-# Set to 'y' if you would like Packstack to install OpenStack Image
-# Service (Glance)
+# Specify 'y' to install OpenStack Image Service (glance). ['y', 'n']
 CONFIG_GLANCE_INSTALL=y
 
-# Set to 'y' if you would like Packstack to install OpenStack Block
-# Storage (Cinder)
+# Specify 'y' to install OpenStack Block Storage (cinder). ['y', 'n']
 CONFIG_CINDER_INSTALL={{ 'y' if components.cinder == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install OpenStack Compute
-# (Nova)
+# Specify 'y' to install OpenStack Shared File System (manila). ['y',
+# 'n']
+CONFIG_MANILA_INSTALL=n
+
+# Specify 'y' to install OpenStack Compute (nova). ['y', 'n']
 CONFIG_NOVA_INSTALL=y
 
-# Set to 'y' if you would like Packstack to install OpenStack
-# Networking (Neutron). Otherwise Nova Network will be used.
+# Specify 'y' to install OpenStack Networking (neutron); otherwise,
+# Compute Networking (nova) will be used. ['y', 'n']
 CONFIG_NEUTRON_INSTALL=y
 
-# Set to 'y' if you would like Packstack to install OpenStack
-# Dashboard (Horizon)
+# Specify 'y' to install OpenStack Dashboard (horizon). ['y', 'n']
 CONFIG_HORIZON_INSTALL={{ 'y' if components.horizon == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install OpenStack Object
-# Storage (Swift)
+# Specify 'y' to install OpenStack Object Storage (swift). ['y', 'n']
 CONFIG_SWIFT_INSTALL={{ 'y' if components.swift == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install OpenStack
-# Metering (Ceilometer)
+# Specify 'y' to install OpenStack Metering (ceilometer). ['y', 'n']
 CONFIG_CEILOMETER_INSTALL={{ 'y' if components.ceilometer == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install OpenStack
-# Orchestration (Heat)
+# Specify 'y' to install OpenStack Orchestration (heat). ['y', 'n']
 CONFIG_HEAT_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install OpenStack
-# Clustering (Sahara)
+# Specify 'y' to install OpenStack Data Processing (sahara). ['y',
+# 'n']
 CONFIG_SAHARA_INSTALL={{ 'y' if components.sahara == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install OpenStack
-# Database (Trove)
+# Specify 'y' to install OpenStack Database (trove) ['y', 'n']
 CONFIG_TROVE_INSTALL={{ 'y' if components.trove == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install OpenStack Bare
-# # Metal (Ironic)
+# Specify 'y' to install OpenStack Bare Metal Provisioning (ironic).
+# ['y', 'n']
 CONFIG_IRONIC_INSTALL={{ 'y' if components.ironic == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install the OpenStack
-# Client packages. An admin "rc" file will also be installed
+# Specify 'y' to install the OpenStack Client packages (command-line
+# tools). An admin "rc" file will also be installed. ['y', 'n']
 CONFIG_CLIENT_INSTALL=y
 
-# Comma separated list of NTP servers. Leave plain if Packstack
+# Comma-separated list of NTP servers. Leave plain if Packstack
 # should not install ntpd on instances.
 CONFIG_NTP_SERVERS={{ ntp | join(",") }}
 
-# Set to 'y' if you would like Packstack to install Nagios to monitor
-# OpenStack hosts
+# Specify 'y' to install Nagios to monitor OpenStack hosts. Nagios
+# provides additional tools for monitoring the OpenStack environment.
+# ['y', 'n']
 CONFIG_NAGIOS_INSTALL={{ 'y' if components.nagios == true else 'n' }}
 
-# Comma separated list of servers to be excluded from installation in
-# case you are running Packstack the second time with the same answer
-# file and don't want Packstack to touch these servers. Leave plain if
-# you don't need to exclude any server.
+# Comma-separated list of servers to be excluded from the
+# installation. This is helpful if you are running Packstack a second
+# time with the same answer file and do not want Packstack to
+# overwrite these server's configurations. Leave empty if you do not
+# need to exclude any servers.
 EXCLUDE_SERVERS=
 
-# Set to 'y' if you want to run OpenStack services in debug mode.
-# Otherwise set to 'n'.
+# Specify 'y' if you want to run OpenStack services in debug mode;
+# otherwise, specify 'n'. ['y', 'n']
 CONFIG_DEBUG_MODE=y
 
-# The IP address of the server on which to install OpenStack services
-# specific to controller role such as API servers, Horizon, etc.
+# IP address of the server on which to install OpenStack services
+# specific to the controller role (for example, API servers or
+# dashboard).
 CONFIG_CONTROLLER_HOST={{ address.controller }}
 
-# The list of IP addresses of the server on which to install the Nova
-# compute service
+# List of IP addresses of the servers on which to install the Compute
+# service.
 CONFIG_COMPUTE_HOSTS={{ address.compute | join(",") }}
 
-# The list of IP addresses of the server on which to install the
-# network service such as Nova network or Neutron
+# List of IP addresses of the server on which to install the network
+# service such as Compute networking (nova network) or OpenStack
+# Networking (neutron).
 CONFIG_NETWORK_HOSTS={{ address.network }}
 
-# Set to 'y' if you want to use VMware vCenter as hypervisor and
-# storage. Otherwise set to 'n'.
+# Specify 'y' if you want to use VMware vCenter as hypervisor and
+# storage; otherwise, specify 'n'. ['y', 'n']
 CONFIG_VMWARE_BACKEND=n
 
-# Set to 'y' if you want to use unsupported parameters. This should
-# be used only if you know what you are doing.Issues caused by using
-# unsupported options won't be fixed before next major release.
+# Specify 'y' if you want to use unsupported parameters. This should
+# be used only if you know what you are doing. Issues caused by using
+# unsupported options will not be fixed before the next major release.
+# ['y', 'n']
 CONFIG_UNSUPPORTED=y
 
-# The IP address of the VMware vCenter server
+# IP address of the VMware vCenter server.
 CONFIG_VCENTER_HOST=
 
-# The username to authenticate to VMware vCenter server
+# User name for VMware vCenter server authentication.
 CONFIG_VCENTER_USER=
 
-# The password to authenticate to VMware vCenter server
+# Password for VMware vCenter server authentication.
 CONFIG_VCENTER_PASSWORD=
 
-# The name of the vCenter cluster
+# Name of the VMware vCenter cluster.
 CONFIG_VCENTER_CLUSTER_NAME=
 
-# (Unsupported!) The IP address of the server on which to install
-# OpenStack services specific to storage servers such as Glance and
-# Cinder.
+# (Unsupported!) IP address of the server on which to install
+# OpenStack services specific to storage servers such as Image or
+# Block Storage services.
 CONFIG_STORAGE_HOST={{ address.storage }}
 
-# (Unsupported!) The IP address of the server on which to install
-# OpenStack services specific to Sahara
+# (Unsupported!) IP address of the server on which to install
+# OpenStack services specific to OpenStack Data Processing (sahara).
 CONFIG_SAHARA_HOST={{ address.controller }}
 
-# To subscribe each server to EPEL enter "y"
+# Specify 'y' to enable the EPEL repository (Extra Packages for
+# Enterprise Linux). ['y', 'n']
 CONFIG_USE_EPEL=n
 
-# A comma separated list of URLs to any additional yum repositories
-# to install
+# Comma-separated list of URLs for any additional yum repositories,
+# to use for installation.
 CONFIG_REPO=
 
-# To subscribe each server with Red Hat subscription manager, include
-# this with CONFIG_RH_PW
+# To subscribe each server with Red Hat Subscription Manager, include
+# this with CONFIG_RH_PW.
 CONFIG_RH_USER=
 
-# To subscribe each server with RHN Satellite,fill Satellite's URL
-# here. Note that either satellite's username/password or activation
-# key has to be provided
+# To subscribe each server to receive updates from a Satellite
+# server, provide the URL of the Satellite server. You must also
+# provide a user name (CONFIG_SATELLITE_USERNAME) and password
+# (CONFIG_SATELLITE_PASSWORD) or an access key (CONFIG_SATELLITE_AKEY)
+# for authentication.
 CONFIG_SATELLITE_URL=
 
-# To subscribe each server with Red Hat subscription manager, include
-# this with CONFIG_RH_USER
+# To subscribe each server with Red Hat Subscription Manager, include
+# this with CONFIG_RH_USER.
 CONFIG_RH_PW=
 
-# To enable RHEL optional repos use value "y"
-CONFIG_RH_OPTIONAL=n
+# Specify 'y' to enable RHEL optional repositories. ['y', 'n']
+CONFIG_RH_OPTIONAL=y
 
-# Specify a HTTP proxy to use with Red Hat subscription manager
+# HTTP proxy to use with Red Hat Subscription Manager.
 CONFIG_RH_PROXY=
 
-# Specify port of Red Hat subscription manager HTTP proxy
+# Port to use for Red Hat Subscription Manager's HTTP proxy.
 CONFIG_RH_PROXY_PORT=
 
-# Specify a username to use with Red Hat subscription manager HTTP
-# proxy
+# User name to use for Red Hat Subscription Manager's HTTP proxy.
 CONFIG_RH_PROXY_USER=
 
-# Specify a password to use with Red Hat subscription manager HTTP
-# proxy
+# Password to use for Red Hat Subscription Manager's HTTP proxy.
 CONFIG_RH_PROXY_PW=
 
-# Username to access RHN Satellite
+# User name to authenticate with the RHN Satellite server; if you
+# intend to use an access key for Satellite authentication, leave this
+# blank.
 CONFIG_SATELLITE_USER=
 
-# Password to access RHN Satellite
+# Password to authenticate with the RHN Satellite server; if you
+# intend to use an access key for Satellite authentication, leave this
+# blank.
 CONFIG_SATELLITE_PW=
 
-# Activation key for subscription to RHN Satellite
+# Access key for the Satellite server; if you intend to use a user
+# name and password for Satellite authentication, leave this blank.
 CONFIG_SATELLITE_AKEY=
 
-# Specify a path or URL to a SSL CA certificate to use
+# Certificate path or URL of the certificate authority to verify that
+# the connection with the Satellite server is secure. If you are not
+# using Satellite in your deployment, leave this blank.
 CONFIG_SATELLITE_CACERT=
 
-# If required specify the profile name that should be used as an
-# identifier for the system in RHN Satellite
+# Profile name that should be used as an identifier for the system in
+# RHN Satellite (if required).
 CONFIG_SATELLITE_PROFILE=
 
-# Comma separated list of flags passed to rhnreg_ks. Valid flags are:
-# novirtinfo, norhnsd, nopackages
+# Comma-separated list of flags passed to the rhnreg_ks command.
+# Valid flags are: novirtinfo, norhnsd, nopackages ['novirtinfo',
+# 'norhnsd', 'nopackages']
 CONFIG_SATELLITE_FLAGS=
 
-# Specify a HTTP proxy to use with RHN Satellite
+# HTTP proxy to use when connecting to the RHN Satellite server (if
+# required).
 CONFIG_SATELLITE_PROXY=
 
-# Specify a username to use with an authenticated HTTP proxy
+# User name to authenticate with the Satellite-server HTTP proxy.
 CONFIG_SATELLITE_PROXY_USER=
 
-# Specify a password to use with an authenticated HTTP proxy.
+# User password to authenticate with the Satellite-server HTTP proxy.
 CONFIG_SATELLITE_PROXY_PW=
 
-# Set the AMQP service backend. Allowed values are: qpid, rabbitmq
+# Service to be used as the AMQP broker. Allowed values are: qpid,
+# rabbitmq ['qpid', 'rabbitmq']
 CONFIG_AMQP_BACKEND=rabbitmq
 
-# The IP address of the server on which to install the AMQP service
+# IP address of the server on which to install the AMQP service.
 CONFIG_AMQP_HOST={{ address.controller }}
 
-# Enable SSL for the AMQP service
+# Specify 'y' to enable SSL for the AMQP service. ['y', 'n']
 CONFIG_AMQP_ENABLE_SSL=n
 
-# Enable Authentication for the AMQP service
+# Specify 'y' to enable authentication for the AMQP service. ['y',
+# 'n']
 CONFIG_AMQP_ENABLE_AUTH=n
 
-# The password for the NSS certificate database of the AMQP service
-CONFIG_AMQP_NSS_CERTDB_PW=PW_PLACEHOLDER
+# Password for the NSS certificate database of the AMQP service.
+CONFIG_AMQP_NSS_CERTDB_PW={{ secret }}
 
-# The port in which the AMQP service listens to SSL connections
+# Port on which the AMQP service listens for SSL connections.
 CONFIG_AMQP_SSL_PORT=5671
 
-# The filename of the certificate that the AMQP service is going to
-# use
+# File name of the CAcertificate that the AMQP service will use for
+# verification.
+CONFIG_AMQP_SSL_CACERT_FILE=/etc/pki/tls/certs/amqp_selfcert.pem
+
+# File name of the certificate that the AMQP service will use for
+# verification.
 CONFIG_AMQP_SSL_CERT_FILE=/etc/pki/tls/certs/amqp_selfcert.pem
 
-# The filename of the private key that the AMQP service is going to
-# use
+# File name of the private key that the AMQP service will use for
+# verification.
 CONFIG_AMQP_SSL_KEY_FILE=/etc/pki/tls/private/amqp_selfkey.pem
 
-# Auto Generates self signed SSL certificate and key
+# Specify 'y' to automatically generate a self-signed SSL certificate
+# and key. ['y', 'n']
 CONFIG_AMQP_SSL_SELF_SIGNED=y
 
-# User for amqp authentication
+# User for AMQP authentication.
 CONFIG_AMQP_AUTH_USER=amqp_user
 
-# Password for user authentication
+# Password for AMQP authentication.
 CONFIG_AMQP_AUTH_PASSWORD={{ secret }}
 
-# The IP address of the server on which to install MariaDB or IP
-# address of DB server to use if MariaDB installation was not selected
+# IP address of the server on which to install MariaDB. If a MariaDB
+# installation was not specified in CONFIG_MARIADB_INSTALL, specify
+# the IP address of an existing database server (a MariaDB cluster can
+# also be specified).
 CONFIG_MARIADB_HOST={{ address.controller }}
 
-# Username for the MariaDB admin user
+# User name for the MariaDB administrative user.
 CONFIG_MARIADB_USER=root
 
-# Password for the MariaDB admin user
+# Password for the MariaDB administrative user.
 CONFIG_MARIADB_PW={{ secret }}
 
-# The password to use for the Keystone to access DB
+# Password to use for the Identity service (keystone) to access the
+# database.
 CONFIG_KEYSTONE_DB_PW={{ secret }}
 
-# Region name
+# Default region name to use when creating tenants in the Identity
+# service.
 CONFIG_KEYSTONE_REGION=RegionOne
 
-# The token to use for the Keystone service api
+# Token to use for the Identity service API.
 CONFIG_KEYSTONE_ADMIN_TOKEN={{ secret }}
 
-# The password to use for the Keystone admin user
+# Email address for the Identity service 'admin' user.  Defaults to
+CONFIG_KEYSTONE_ADMIN_EMAIL=root@localhost
+
+# User name for the Identity service 'admin' user.  Defaults to
+# 'admin'.
+CONFIG_KEYSTONE_ADMIN_USERNAME=admin
+
+# Password to use for the Identity service 'admin' user.
 CONFIG_KEYSTONE_ADMIN_PW={{ secret }}
 
-# The password to use for the Keystone demo user
+# Password to use for the Identity service 'demo' user.
 CONFIG_KEYSTONE_DEMO_PW={{ secret }}
 
-# Kestone token format. Use either UUID or PKI
+# Identity service API version string. ['v2.0', 'v3']
+CONFIG_KEYSTONE_API_VERSION=v2.0
+
+# Identity service token format (UUID or PKI). The recommended format
+# for new deployments is UUID. ['UUID', 'PKI']
 CONFIG_KEYSTONE_TOKEN_FORMAT=UUID
 
-# Name of service to use to run keystone (keystone or httpd)
-CONFIG_KEYSTONE_SERVICE_NAME=keystone
+# Name of service to use to run the Identity service (keystone or
+# httpd). ['keystone', 'httpd']
+CONFIG_KEYSTONE_SERVICE_NAME=httpd
 
-# The password to use for the Glance to access DB
+# Type of Identity service backend (sql or ldap). ['sql', 'ldap']
+CONFIG_KEYSTONE_IDENTITY_BACKEND=sql
+
+# URL for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_URL=ldap://{{ address.controller }}
+
+# User DN for the Identity service LDAP backend.  Used to bind to the
+# LDAP server if the LDAP server does not allow anonymous
+# authentication.
+CONFIG_KEYSTONE_LDAP_USER_DN=
+
+# User DN password for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_PASSWORD=
+
+# Base suffix for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_SUFFIX=
+
+# Query scope for the Identity service LDAP backend (base, one, sub).
+# ['base', 'one', 'sub']
+CONFIG_KEYSTONE_LDAP_QUERY_SCOPE=one
+
+# Query page size for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_PAGE_SIZE=-1
+
+# User subtree for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_SUBTREE=
+
+# User query filter for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_FILTER=
+
+# User object class for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_OBJECTCLASS=
+
+# User ID attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_ID_ATTRIBUTE=
+
+# User name attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_NAME_ATTRIBUTE=
+
+# User email address attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_MAIL_ATTRIBUTE=
+
+# User-enabled attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_ENABLED_ATTRIBUTE=
+
+# Bit mask applied to user-enabled attribute for the Identity service
+# LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_ENABLED_MASK=-1
+
+# Value of enabled attribute which indicates user is enabled for the
+# Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_USER_ENABLED_DEFAULT=TRUE
+
+# Specify 'y' if users are disabled (not enabled) in the Identity
+# service LDAP backend. ['n', 'y']
+CONFIG_KEYSTONE_LDAP_USER_ENABLED_INVERT=n
+
+# Comma-separated list of attributes stripped from LDAP user entry
+# upon update.
+CONFIG_KEYSTONE_LDAP_USER_ATTRIBUTE_IGNORE=
+
+# Identity service LDAP attribute mapped to default_project_id for
+# users.
+CONFIG_KEYSTONE_LDAP_USER_DEFAULT_PROJECT_ID_ATTRIBUTE=
+
+# Specify 'y' if you want to be able to create Identity service users
+# through the Identity service interface; specify 'n' if you will
+# create directly in the LDAP backend. ['n', 'y']
+CONFIG_KEYSTONE_LDAP_USER_ALLOW_CREATE=n
+
+# Specify 'y' if you want to be able to update Identity service users
+# through the Identity service interface; specify 'n' if you will
+# update directly in the LDAP backend. ['n', 'y']
+CONFIG_KEYSTONE_LDAP_USER_ALLOW_UPDATE=n
+
+# Specify 'y' if you want to be able to delete Identity service users
+# through the Identity service interface; specify 'n' if you will
+# delete directly in the LDAP backend. ['n', 'y']
+CONFIG_KEYSTONE_LDAP_USER_ALLOW_DELETE=n
+
+# Identity service LDAP attribute mapped to password.
+CONFIG_KEYSTONE_LDAP_USER_PASS_ATTRIBUTE=
+
+# DN of the group entry to hold enabled LDAP users when using enabled
+# emulation.
+CONFIG_KEYSTONE_LDAP_USER_ENABLED_EMULATION_DN=
+
+# List of additional LDAP attributes for mapping additional attribute
+# mappings for users. The attribute-mapping format is
+# <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the
+# LDAP entry and user_attr is the Identity API attribute.
+CONFIG_KEYSTONE_LDAP_USER_ADDITIONAL_ATTRIBUTE_MAPPING=
+
+# Group subtree for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_GROUP_SUBTREE=
+
+# Group query filter for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_GROUP_FILTER=
+
+# Group object class for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_GROUP_OBJECTCLASS=
+
+# Group ID attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_GROUP_ID_ATTRIBUTE=
+
+# Group name attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_GROUP_NAME_ATTRIBUTE=
+
+# Group member attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_GROUP_MEMBER_ATTRIBUTE=
+
+# Group description attribute for the Identity service LDAP backend.
+CONFIG_KEYSTONE_LDAP_GROUP_DESC_ATTRIBUTE=
+
+# Comma-separated list of attributes stripped from LDAP group entry
+# upon update.
+CONFIG_KEYSTONE_LDAP_GROUP_ATTRIBUTE_IGNORE=
+
+# Specify 'y' if you want to be able to create Identity service
+# groups through the Identity service interface; specify 'n' if you
+# will create directly in the LDAP backend. ['n', 'y']
+CONFIG_KEYSTONE_LDAP_GROUP_ALLOW_CREATE=n
+
+# Specify 'y' if you want to be able to update Identity service
+# groups through the Identity service interface; specify 'n' if you
+# will update directly in the LDAP backend. ['n', 'y']
+CONFIG_KEYSTONE_LDAP_GROUP_ALLOW_UPDATE=n
+
+# Specify 'y' if you want to be able to delete Identity service
+# groups through the Identity service interface; specify 'n' if you
+# will delete directly in the LDAP backend. ['n', 'y']
+CONFIG_KEYSTONE_LDAP_GROUP_ALLOW_DELETE=n
+
+# List of additional LDAP attributes used for mapping additional
+# attribute mappings for groups. The attribute=mapping format is
+# <ldap_attr>:<group_attr>, where ldap_attr is the attribute in the
+# LDAP entry and group_attr is the Identity API attribute.
+CONFIG_KEYSTONE_LDAP_GROUP_ADDITIONAL_ATTRIBUTE_MAPPING=
+
+# Specify 'y' if the Identity service LDAP backend should use TLS.
+# ['n', 'y']
+CONFIG_KEYSTONE_LDAP_USE_TLS=n
+
+# CA certificate directory for Identity service LDAP backend (if TLS
+# is used).
+CONFIG_KEYSTONE_LDAP_TLS_CACERTDIR=
+
+# CA certificate file for Identity service LDAP backend (if TLS is
+# used).
+CONFIG_KEYSTONE_LDAP_TLS_CACERTFILE=
+
+# Certificate-checking strictness level for Identity service LDAP
+# backend; valid options are: never, allow, demand. ['never', 'allow',
+# 'demand']
+CONFIG_KEYSTONE_LDAP_TLS_REQ_CERT=demand
+
+# Password to use for the Image service (glance) to access the
+# database.
 CONFIG_GLANCE_DB_PW={{ secret }}
 
-# The password to use for the Glance to authenticate with Keystone
+# Password to use for the Image service to authenticate with the
+# Identity service.
 CONFIG_GLANCE_KS_PW={{ secret }}
 
-# Glance storage backend controls how Glance stores disk images.
-# Supported values: file, swift. Note that Swift installation have to
-# be enabled to have swift backend working. Otherwise Packstack will
-# fallback to 'file'.
+# Storage backend for the Image service (controls how the Image
+# service stores disk images). Valid options are: file or swift
+# (Object Storage). The Object Storage service must be enabled to use
+# it as a working backend; otherwise, Packstack falls back to 'file'.
+# ['file', 'swift']
 CONFIG_GLANCE_BACKEND=file
 
-# The password to use for the Cinder to access DB
+# Password to use for the Block Storage service (cinder) to access
+# the database.
 CONFIG_CINDER_DB_PW={{ secret }}
 
-# The password to use for the Cinder to authenticate with Keystone
+# Password to use for the Block Storage service to authenticate with
+# the Identity service.
 CONFIG_CINDER_KS_PW={{ secret }}
 
-# The Cinder backend to use, valid options are: lvm, gluster, nfs,
-# netapp
+# Storage backend to use for the Block Storage service; valid options
+# are: lvm, gluster, nfs, vmdk, netapp. ['lvm', 'gluster', 'nfs',
+# 'vmdk', 'netapp']
 CONFIG_CINDER_BACKEND=nfs
 
-# Create Cinder's volumes group. This should only be done for testing
-# on a proof-of-concept installation of Cinder. This will create a
-# file-backed volume group and is not suitable for production usage.
+# Specify 'y' to create the Block Storage volumes group. That is,
+# Packstack creates a raw disk image in /var/lib/cinder, and mounts it
+# using a loopback device. This should only be used for testing on a
+# proof-of-concept installation of the Block Storage service (a file-
+# backed volume group is not suitable for production usage). ['y',
+# 'n']
 CONFIG_CINDER_VOLUMES_CREATE=y
 
-# Cinder's volumes group size. Note that actual volume size will be
-# extended with 3% more space for VG metadata.
+# Size of Block Storage volumes group. Actual volume size will be
+# extended with 3% more space for VG metadata. Remember that the size
+# of the volume group will restrict the amount of disk space that you
+# can expose to Compute instances, and that the specified amount must
+# be available on the device used for /var/lib/cinder.
 CONFIG_CINDER_VOLUMES_SIZE=20G
 
-# A single or comma separated list of gluster volume shares to mount,
-# eg: ip-address:/vol-name, domain:/vol-name
+# A single or comma-separated list of Red Hat Storage (gluster)
+# volume shares to mount. Example: 'ip-address:/vol-name', 'domain
+# :/vol-name'
 CONFIG_CINDER_GLUSTER_MOUNTS=
 
-# A single or comma seprated list of NFS exports to mount, eg: ip-
-# address:/export-name
+# A single or comma-separated list of NFS exports to mount. Example:
+# 'ip-address:/export-name'
 CONFIG_CINDER_NFS_MOUNTS={{ address.storage }}:/export
 
-# (required) Administrative user account name used to access the
-# storage system or proxy server.
+# Administrative user account name used to access the NetApp storage
+# system or proxy server.
 CONFIG_CINDER_NETAPP_LOGIN=
 
-# (required) Password for the administrative user account specified
-# in the netapp_login parameter.
+# Password for the NetApp administrative user account specified in
+# the CONFIG_CINDER_NETAPP_LOGIN parameter.
 CONFIG_CINDER_NETAPP_PASSWORD=
 
-# (required) The hostname (or IP address) for the storage system or
-# proxy server.
+# Hostname (or IP address) for the NetApp storage system or proxy
+# server.
 CONFIG_CINDER_NETAPP_HOSTNAME=
 
-# (optional) The TCP port to use for communication with ONTAPI on the
-# storage system. Traditionally, port 80 is used for HTTP and port 443
-# is used for HTTPS; however, this value should be changed if an
-# alternate port has been configured on the storage system or proxy
-# server.  Defaults to 80.
+# The TCP port to use for communication with the storage system or
+# proxy. If not specified, Data ONTAP drivers will use 80 for HTTP and
+# 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.
+# Defaults to 80.
 CONFIG_CINDER_NETAPP_SERVER_PORT=80
 
-# (optional) The storage family type used on the storage system;
-# valid values are ontap_7mode for using Data ONTAP operating in
-# 7-Mode or ontap_cluster for using clustered Data ONTAP, or eseries
-# for NetApp E-Series. Defaults to ontap_cluster.
+# Storage family type used on the NetApp storage system; valid
+# options are ontap_7mode for using Data ONTAP operating in 7-Mode,
+# ontap_cluster for using clustered Data ONTAP, or E-Series for NetApp
+# E-Series. Defaults to ontap_cluster. ['ontap_7mode',
+# 'ontap_cluster', 'eseries']
 CONFIG_CINDER_NETAPP_STORAGE_FAMILY=ontap_cluster
 
-# (optional) The transport protocol used when communicating with
-# ONTAPI on the storage system or proxy server. Valid values are http
-# or https.  Defaults to http.
+# The transport protocol used when communicating with the NetApp
+# storage system or proxy server. Valid values are http or https.
+# Defaults to 'http'. ['http', 'https']
 CONFIG_CINDER_NETAPP_TRANSPORT_TYPE=http
 
-# (optional) The storage protocol to be used on the data path with
-# the storage system; valid values are iscsi or nfs. Defaults to nfs.
+# Storage protocol to be used on the data path with the NetApp
+# storage system; valid options are iscsi, fc, nfs. Defaults to nfs.
+# ['iscsi', 'fc', 'nfs']
 CONFIG_CINDER_NETAPP_STORAGE_PROTOCOL=nfs
 
-# (optional) The quantity to be multiplied by the requested volume
-# size to ensure enough space is available on the virtual storage
-# server (Vserver) to fulfill the volume creation request.  Defaults
-# to 1.0.
+# Quantity to be multiplied by the requested volume size to ensure
+# enough space is available on the virtual storage server (Vserver) to
+# fulfill the volume creation request.  Defaults to 1.0.
 CONFIG_CINDER_NETAPP_SIZE_MULTIPLIER=1.0
 
-# (optional) This parameter specifies the threshold for last access
-# time for images in the NFS image cache. When a cache cleaning cycle
-# begins, images in the cache that have not been accessed in the last
-# M minutes, where M is the value of this parameter, will be deleted
-# from the cache to create free space on the NFS share. Defaults to
-# 720.
+# Time period (in minutes) that is allowed to elapse after the image
+# is last accessed, before it is deleted from the NFS image cache.
+# When a cache-cleaning cycle begins, images in the cache that have
+# not been accessed in the last M minutes, where M is the value of
+# this parameter, are deleted from the cache to create free space on
+# the NFS share. Defaults to 720.
 CONFIG_CINDER_NETAPP_EXPIRY_THRES_MINUTES=720
 
-# (optional) If the percentage of available space for an NFS share
-# has dropped below the value specified by this parameter, the NFS
-# image cache will be cleaned.  Defaults to 20
+# If the percentage of available space for an NFS share has dropped
+# below the value specified by this parameter, the NFS image cache is
+# cleaned.  Defaults to 20.
 CONFIG_CINDER_NETAPP_THRES_AVL_SIZE_PERC_START=20
 
-# (optional) When the percentage of available space on an NFS share
-# has reached the percentage specified by this parameter, the driver
-# will stop clearing files from the NFS image cache that have not been
-# accessed in the last M minutes, where M is the value of the
-# expiry_thres_minutes parameter.  Defaults to 60.
+# When the percentage of available space on an NFS share has reached
+# the percentage specified by this parameter, the driver stops
+# clearing files from the NFS image cache that have not been accessed
+# in the last M minutes, where M is the value of the
+# CONFIG_CINDER_NETAPP_EXPIRY_THRES_MINUTES parameter. Defaults to 60.
 CONFIG_CINDER_NETAPP_THRES_AVL_SIZE_PERC_STOP=60
 
-# (optional) File with the list of available NFS shares.   Defaults
-# to ''.
-CONFIG_CINDER_NETAPP_NFS_SHARES_CONFIG=
+# Single or comma-separated list of NetApp NFS shares for Block
+# Storage to use.  Format: ip-address:/export-name. Defaults to ''.
+CONFIG_CINDER_NETAPP_NFS_SHARES=
 
-# (optional) This parameter is only utilized when the storage
-# protocol is configured to use iSCSI. This parameter is used to
-# restrict provisioning to the specified controller volumes. Specify
-# the value of this parameter to be a comma separated list of NetApp
-# controller volume names to be used for provisioning.  Defaults to
-# ''.
+# File with the list of available NFS shares.   Defaults to
+# '/etc/cinder/shares.conf'.
+CONFIG_CINDER_NETAPP_NFS_SHARES_CONFIG=/etc/cinder/shares.conf
+
+# This parameter is only utilized when the storage protocol is
+# configured to use iSCSI or FC. This parameter is used to restrict
+# provisioning to the specified controller volumes. Specify the value
+# of this parameter to be a comma separated list of NetApp controller
+# volume names to be used for provisioning. Defaults to ''.
 CONFIG_CINDER_NETAPP_VOLUME_LIST=
 
-# (optional) The vFiler unit on which provisioning of block storage
-# volumes will be done. This parameter is only used by the driver when
-# connecting to an instance with a storage family of Data ONTAP
-# operating in 7-Mode and the storage protocol selected is iSCSI. Only
-# use this parameter when utilizing the MultiStore feature on the
-# NetApp storage system.  Defaults to ''.
+# The vFiler unit on which provisioning of block storage volumes will
+# be done. This parameter is only used by the driver when connecting
+# to an instance with a storage family of Data ONTAP operating in
+# 7-Mode Only use this parameter when utilizing the MultiStore feature
+# on the NetApp storage system. Defaults to ''.
 CONFIG_CINDER_NETAPP_VFILER=
 
-# (optional) This parameter specifies the virtual storage server
-# (Vserver) name on the storage cluster on which provisioning of block
-# storage volumes should occur. If using the NFS storage protocol,
-# this parameter is mandatory for storage service catalog support
-# (utilized by Cinder volume type extra_specs support). If this
-# parameter is specified, the exports belonging to the Vserver will
-# only be used for provisioning in the future. Block storage volumes
-# on exports not belonging to the Vserver specified by this  parameter
-# will continue to function normally.  Defaults to ''.
+# The name of the config.conf stanza for a Data ONTAP (7-mode) HA
+# partner.  This option is only used by the driver when connecting to
+# an instance with a storage family of Data ONTAP operating in 7-Mode,
+# and it is required if the storage protocol selected is FC. Defaults
+# to ''.
+CONFIG_CINDER_NETAPP_PARTNER_BACKEND_NAME=
+
+# This option specifies the virtual storage server (Vserver) name on
+# the storage cluster on which provisioning of block storage volumes
+# should occur. Defaults to ''.
 CONFIG_CINDER_NETAPP_VSERVER=
 
-# (optional) This option is only utilized when the storage family is
-# configured to eseries. This option is used to restrict provisioning
-# to the specified controllers. Specify the value of this option to be
-# a comma separated list of controller hostnames or IP addresses to be
-# used for provisioning.  Defaults to ''.
+# Restricts provisioning to the specified controllers. Value must be
+# a comma-separated list of controller hostnames or IP addresses to be
+# used for provisioning. This option is only utilized when the storage
+# family is configured to use E-Series. Defaults to ''.
 CONFIG_CINDER_NETAPP_CONTROLLER_IPS=
 
-# (optional) Password for the NetApp E-Series storage array. Defaults
-# to ''.
+# Password for the NetApp E-Series storage array. Defaults to ''.
 CONFIG_CINDER_NETAPP_SA_PASSWORD=
 
-# (optional) This option is used to specify the path to the E-Series
-# proxy application on a proxy server. The value is combined with the
-# value of the netapp_transport_type, netapp_server_hostname, and
-# netapp_server_port options to create the URL used by the driver to
-# connect to the proxy application.  Defaults to '/devmgr/v2'.
+# This option is used to define how the controllers in the E-Series
+# storage array will work with the particular operating system on the
+# hosts that are connected to it. Defaults to 'linux_dm_mp'
+CONFIG_CINDER_NETAPP_ESERIES_HOST_TYPE=linux_dm_mp
+
+# Path to the NetApp E-Series proxy application on a proxy server.
+# The value is combined with the value of the
+# CONFIG_CINDER_NETAPP_TRANSPORT_TYPE, CONFIG_CINDER_NETAPP_HOSTNAME,
+# and CONFIG_CINDER_NETAPP_HOSTNAME options to create the URL used by
+# the driver to connect to the proxy application. Defaults to
+# '/devmgr/v2'.
 CONFIG_CINDER_NETAPP_WEBSERVICE_PATH=/devmgr/v2
 
-# (optional) This option is used to restrict provisioning to the
-# specified storage pools. Only dynamic disk pools are currently
-# supported. Specify the value of this option to be a comma separated
-# list of disk pool names to be used for provisioning.  Defaults to
-# ''.
+# Restricts provisioning to the specified storage pools. Only dynamic
+# disk pools are currently supported. The value must be a comma-
+# separated list of disk pool names to be used for provisioning.
+# Defaults to ''.
 CONFIG_CINDER_NETAPP_STORAGE_POOLS=
 
+# Password to use for the OpenStack File Share service (manila) to
+# access the database.
+CONFIG_MANILA_DB_PW={{ secret }}
+
+# Password to use for the OpenStack File Share service (manila) to
+# authenticate with the Identity service.
+CONFIG_MANILA_KS_PW={{ secret }}
+
+# Backend for the OpenStack File Share service (manila); valid
+# options are: generic or netapp. ['generic', 'netapp']
+CONFIG_MANILA_BACKEND=generic
+
+# Denotes whether the driver should handle the responsibility of
+# managing share servers. This must be set to false if the driver is
+# to operate without managing share servers. Defaults to 'false'
+# ['true', 'false']
+CONFIG_MANILA_NETAPP_DRV_HANDLES_SHARE_SERVERS=false
+
+# The transport protocol used when communicating with the storage
+# system or proxy server. Valid values are 'http' and 'https'.
+# Defaults to 'https'. ['https', 'http']
+CONFIG_MANILA_NETAPP_TRANSPORT_TYPE=https
+
+# Administrative user account name used to access the NetApp storage
+# system.  Defaults to ''.
+CONFIG_MANILA_NETAPP_LOGIN=admin
+
+# Password for the NetApp administrative user account specified in
+# the CONFIG_MANILA_NETAPP_LOGIN parameter. Defaults to ''.
+CONFIG_MANILA_NETAPP_PASSWORD=
+
+# Hostname (or IP address) for the NetApp storage system or proxy
+# server. Defaults to ''.
+CONFIG_MANILA_NETAPP_SERVER_HOSTNAME=
+
+# The storage family type used on the storage system; valid values
+# are ontap_cluster for clustered Data ONTAP. Defaults to
+# 'ontap_cluster'. ['ontap_cluster']
+CONFIG_MANILA_NETAPP_STORAGE_FAMILY=ontap_cluster
+
+# The TCP port to use for communication with the storage system or
+# proxy server. If not specified, Data ONTAP drivers will use 80 for
+# HTTP and 443 for HTTPS. Defaults to '443'.
+CONFIG_MANILA_NETAPP_SERVER_PORT=443
+
+# Pattern for searching available aggregates for NetApp provisioning.
+# Defaults to '(.*)'.
+CONFIG_MANILA_NETAPP_AGGREGATE_NAME_SEARCH_PATTERN=(.*)
+
+# Name of aggregate on which to create the NetApp root volume. This
+# option only applies when the option
+# CONFIG_MANILA_NETAPP_DRV_HANDLES_SHARE_SERVERS is set to True.
+CONFIG_MANILA_NETAPP_ROOT_VOLUME_AGGREGATE=
+
+# NetApp root volume name. Defaults to 'root'.
+CONFIG_MANILA_NETAPP_ROOT_VOLUME_NAME=root
+
+# This option specifies the storage virtual machine (previously
+# called a Vserver) name on the storage cluster on which provisioning
+# of shared file systems should occur. This option only applies when
+# the option driver_handles_share_servers is set to False. Defaults to
+# ''.
+CONFIG_MANILA_NETAPP_VSERVER=
+
+# Denotes whether the driver should handle the responsibility of
+# managing share servers. This must be set to false if the driver is
+# to operate without managing share servers. Defaults to 'true'.
+# ['true', 'false']
+CONFIG_MANILA_GENERIC_DRV_HANDLES_SHARE_SERVERS=true
+
+# Volume name template for Manila service. Defaults to 'manila-
+# share-%s'.
+CONFIG_MANILA_GENERIC_VOLUME_NAME_TEMPLATE=manila-share-%s
+
+# Share mount path for Manila service. Defaults to '/shares'.
+CONFIG_MANILA_GENERIC_SHARE_MOUNT_PATH=/shares
+
+# Location of disk image for Manila service instance. Defaults to '
+CONFIG_MANILA_SERVICE_IMAGE_LOCATION=https://www.dropbox.com/s/vi5oeh10q1qkckh/ubuntu_1204_nfs_cifs.qcow2
+
+# User in Manila service instance.
+CONFIG_MANILA_SERVICE_INSTANCE_USER=ubuntu
+
+# Password to service instance user.
+CONFIG_MANILA_SERVICE_INSTANCE_PASSWORD=ubuntu
+
+# Type of networking that the backend will use. A more detailed
+# description of each option is available in the Manila docs. Defaults
+# to 'neutron'. ['neutron', 'nova-network', 'standalone']
+CONFIG_MANILA_NETWORK_TYPE=neutron
+
+# Gateway IPv4 address that should be used. Required. Defaults to ''.
+CONFIG_MANILA_NETWORK_STANDALONE_GATEWAY=
+
+# Network mask that will be used. Can be either decimal like '24' or
+# binary like '255.255.255.0'. Required. Defaults to ''.
+CONFIG_MANILA_NETWORK_STANDALONE_NETMASK=
+
+# Set it if network has segmentation (VLAN, VXLAN, etc). It will be
+# assigned to share-network and share drivers will be able to use this
+# for network interfaces within provisioned share servers. Optional.
+# Example: 1001. Defaults to ''.
+CONFIG_MANILA_NETWORK_STANDALONE_SEG_ID=
+
+# Can be IP address, range of IP addresses or list of addresses or
+# ranges. Contains addresses from IP network that are allowed to be
+# used. If empty, then will be assumed that all host addresses from
+# network can be used. Optional. Examples: 10.0.0.10 or
+# 10.0.0.10-10.0.0.20 or
+# 10.0.0.10-10.0.0.20,10.0.0.30-10.0.0.40,10.0.0.50. Defaults to ''.
+CONFIG_MANILA_NETWORK_STANDALONE_IP_RANGE=
+
+# IP version of network. Optional. Defaults to '4'. ['4', '6']
+CONFIG_MANILA_NETWORK_STANDALONE_IP_VERSION=4
+
+# Password to use for OpenStack Bare Metal Provisioning (ironic) to
+# access the database.
 CONFIG_IRONIC_DB_PW={{ secret }}
 
-# The password to use for Ironic to authenticate with Keystone
+# Password to use for OpenStack Bare Metal Provisioning to
+# authenticate with the Identity service.
 CONFIG_IRONIC_KS_PW={{ secret }}
 
-# The password to use for the Nova to access DB
+# Password to use for the Compute service (nova) to access the
+# database.
 CONFIG_NOVA_DB_PW={{ secret }}
 
-# The password to use for the Nova to authenticate with Keystone
+# Password to use for the Compute service to authenticate with the
+# Identity service.
 CONFIG_NOVA_KS_PW={{ secret }}
 
-# The overcommitment ratio for virtual to physical CPUs. Set to 1.0
-# to disable CPU overcommitment
+# Overcommitment ratio for virtual to physical CPUs. Specify 1.0 to
+# disable CPU overcommitment.
 CONFIG_NOVA_SCHED_CPU_ALLOC_RATIO=16.0
 
-# The overcommitment ratio for virtual to physical RAM. Set to 1.0 to
-# disable RAM overcommitment
+# Overcommitment ratio for virtual to physical RAM. Specify 1.0 to
+# disable RAM overcommitment.
 CONFIG_NOVA_SCHED_RAM_ALLOC_RATIO=1.5
 
-# Protocol used for instance migration. Allowed values are tcp and
-# ssh. Note that by defaul nova user is created with /sbin/nologin
-# shell so that ssh protocol won't be working. To make ssh protocol
-# work you have to fix nova user on compute hosts manually.
+# Protocol used for instance migration. Valid options are: tcp and
+# ssh. Note that by default, the Compute user is created with the
+# /sbin/nologin shell so that the SSH protocol will not work. To make
+# the SSH protocol work, you must configure the Compute user on
+# compute hosts manually. ['tcp', 'ssh']
 CONFIG_NOVA_COMPUTE_MIGRATE_PROTOCOL=tcp
 
-# Private interface for Flat DHCP on the Nova compute servers
+# Manager that runs the Compute service.
+CONFIG_NOVA_COMPUTE_MANAGER=nova.compute.manager.ComputeManager
+
+# Private interface for flat DHCP on the Compute servers.
 CONFIG_NOVA_COMPUTE_PRIVIF=eth1
 
-# Nova network manager
+# Compute Network Manager. ['^nova\.network\.manager\.\w+Manager$']
 CONFIG_NOVA_NETWORK_MANAGER=nova.network.manager.FlatDHCPManager
 
-# Public interface on the Nova network server
+# Public interface on the Compute network server.
 CONFIG_NOVA_NETWORK_PUBIF=eth0
 
-# Private interface for network manager on the Nova network server
+# Private interface for flat DHCP on the Compute network server.
 CONFIG_NOVA_NETWORK_PRIVIF=eth1
 
-# IP Range for network manager
+# IP Range for flat DHCP. ['^[\:\.\da-fA-f]+(\/\d+){0,1}$']
 CONFIG_NOVA_NETWORK_FIXEDRANGE=192.168.32.0/22
 
-# IP Range for Floating IP's
+# IP Range for floating IP addresses. ['^[\:\.\da-
+# fA-f]+(\/\d+){0,1}$']
 CONFIG_NOVA_NETWORK_FLOATRANGE=10.3.4.0/22
 
-# Name of the default floating pool to which the specified floating
-# ranges are added to
-CONFIG_NOVA_NETWORK_DEFAULTFLOATINGPOOL=nova
-
-# Automatically assign a floating IP to new instances
+# Specify 'y' to automatically assign a floating IP to new instances.
+# ['y', 'n']
 CONFIG_NOVA_NETWORK_AUTOASSIGNFLOATINGIP=n
 
-# First VLAN for private networks
+# First VLAN for private networks (Compute networking).
 CONFIG_NOVA_NETWORK_VLAN_START=100
 
-# Number of networks to support
+# Number of networks to support (Compute networking).
 CONFIG_NOVA_NETWORK_NUMBER=1
 
-# Number of addresses in each private subnet
+# Number of addresses in each private subnet (Compute networking).
 CONFIG_NOVA_NETWORK_SIZE=255
 
-# The password to use for Neutron to authenticate with Keystone
+# Password to use for OpenStack Networking (neutron) to authenticate
+# with the Identity service.
 CONFIG_NEUTRON_KS_PW={{ secret }}
 
-# The password to use for Neutron to access DB
+# The password to use for OpenStack Networking to access the
+# database.
 CONFIG_NEUTRON_DB_PW={{ secret }}
 
-# The name of the bridge that the Neutron L3 agent will use for
-# external traffic, or 'provider' if using provider networks
+# The name of the Open vSwitch bridge (or empty for linuxbridge) for
+# the OpenStack Networking L3 agent to use for external  traffic.
+# Specify 'provider' if you intend to use a provider network to handle
+# external traffic.
 CONFIG_NEUTRON_L3_EXT_BRIDGE=br-ex
 
-# The name of the L2 plugin to be used with Neutron. (eg.
-# linuxbridge, openvswitch, ml2)
-CONFIG_NEUTRON_L2_PLUGIN=ml2
-
-# Neutron metadata agent password
+# Password for the OpenStack Networking metadata agent.
 CONFIG_NEUTRON_METADATA_PW={{ secret }}
 
-# Set to 'y' if you would like Packstack to install Neutron LBaaS
+# Specify 'y' to install OpenStack Networking's Load-Balancing-
+# as-a-Service (LBaaS). ['y', 'n']
 CONFIG_LBAAS_INSTALL=y
 
-# Set to 'y' if you would like Packstack to install Neutron L3
-# Metering agent
-CONFIG_NEUTRON_METERING_AGENT_INSTALL=y
+# Specify 'y' to install OpenStack Networking's L3 Metering agent
+# ['y', 'n']
+CONFIG_NEUTRON_METERING_AGENT_INSTALL={{ 'y' if components.ceilometer == true else 'n' }}
 
-# Whether to configure neutron Firewall as a Service
+# Specify 'y' to configure OpenStack Networking's Firewall-
+# as-a-Service (FWaaS). ['y', 'n']
 CONFIG_NEUTRON_FWAAS=y
 
-# A comma separated list of network type driver entrypoints to be
-# loaded from the neutron.ml2.type_drivers namespace.
+# Comma-separated list of network-type driver entry points to be
+# loaded from the neutron.ml2.type_drivers namespace. ['local',
+# 'flat', 'vlan', 'gre', 'vxlan']
 CONFIG_NEUTRON_ML2_TYPE_DRIVERS={{ network_type }},flat
 
-# A comma separated ordered list of network_types to allocate as
-# tenant networks. The value 'local' is only useful for single-box
-# testing but provides no connectivity between hosts.
+# Comma-separated, ordered list of network types to allocate as
+# tenant networks. The 'local' value is only useful for single-box
+# testing and provides no connectivity between hosts. ['local',
+# 'vlan', 'gre', 'vxlan']
 CONFIG_NEUTRON_ML2_TENANT_NETWORK_TYPES={{ network_type }}
 
-# A comma separated ordered list of networking mechanism driver
-# entrypoints to be loaded from the neutron.ml2.mechanism_drivers
-# namespace.
+# Comma-separated ordered list of networking mechanism driver entry
+# points to be loaded from the neutron.ml2.mechanism_drivers
+# namespace. ['logger', 'test', 'linuxbridge', 'openvswitch',
+# 'hyperv', 'ncs', 'arista', 'cisco_nexus', 'mlnx', 'l2population']
 CONFIG_NEUTRON_ML2_MECHANISM_DRIVERS={{ network_agent }}
 
-# A comma separated  list of physical_network names with which flat
+# Comma-separated list of physical_network names with which flat
 # networks can be created. Use * to allow flat networks with arbitrary
 # physical_network names.
 CONFIG_NEUTRON_ML2_FLAT_NETWORKS=*
 
-# A comma separated list of <physical_network>:<vlan_min>:<vlan_max>
-# or <physical_network> specifying physical_network names usable for
-# VLAN provider and tenant networks, as well as ranges of VLAN tags on
-# each available for allocation to tenant networks.
+# Comma-separated list of <physical_network>:<vlan_min>:<vlan_max> or
+# <physical_network> specifying physical_network names usable for VLAN
+# provider and tenant networks, as well as ranges of VLAN tags on each
+# available for allocation to tenant networks.
 CONFIG_NEUTRON_ML2_VLAN_RANGES=physnet:1000:2000
 
-# A comma separated list of <tun_min>:<tun_max> tuples enumerating
-# ranges of GRE tunnel IDs that are available for tenant network
-# allocation. Should be an array with tun_max +1 - tun_min > 1000000
+# Comma-separated list of <tun_min>:<tun_max> tuples enumerating
+# ranges of GRE tunnel IDs that are available for tenant-network
+# allocation. A tuple must be an array with tun_max +1 - tun_min >
+# 1000000.
 CONFIG_NEUTRON_ML2_TUNNEL_ID_RANGES=1000:2000
 
-# Multicast group for VXLAN. If unset, disables VXLAN enable sending
-# allocate broadcast traffic to this multicast group. When left
-# unconfigured, will disable multicast VXLAN mode. Should be an
-# Multicast IP (v4 or v6) address.
+# Comma-separated list of addresses for VXLAN multicast group. If
+# left empty, disables VXLAN from sending allocate broadcast traffic
+# (disables multicast VXLAN mode). Should be a Multicast IP (v4 or v6)
+# address.
 CONFIG_NEUTRON_ML2_VXLAN_GROUP=
 
-# A comma separated list of <vni_min>:<vni_max> tuples enumerating
+# Comma-separated list of <vni_min>:<vni_max> tuples enumerating
 # ranges of VXLAN VNI IDs that are available for tenant network
-# allocation. Min value is 0 and Max value is 16777215.
+# allocation. Minimum value is 0 and maximum value is 16777215.
 CONFIG_NEUTRON_ML2_VNI_RANGES=10:100
 
-# The name of the L2 agent to be used with Neutron
+# Name of the L2 agent to be used with OpenStack Networking.
+# ['linuxbridge', 'openvswitch']
 CONFIG_NEUTRON_L2_AGENT={{ network_agent }}
 
-# The type of network to allocate for tenant networks (eg. vlan,
-# local)
-CONFIG_NEUTRON_LB_TENANT_NETWORK_TYPE=vlan
+# Comma-separated list of interface mappings for the OpenStack
+# Networking linuxbridge plugin. Each tuple in the list must be in the
+# format <physical_network>:<net_interface>. Example:
+# physnet1:eth1,physnet2:eth2,physnet3:eth3.
+CONFIG_NEUTRON_LB_INTERFACE_MAPPINGS=
 
-# A comma separated list of VLAN ranges for the Neutron linuxbridge
-# plugin (eg. physnet1:1:4094,physnet2,physnet3:3000:3999)
-CONFIG_NEUTRON_LB_VLAN_RANGES=physnet:1000:2000
-
-# A comma separated list of interface mappings for the Neutron
-# linuxbridge plugin (eg. physnet1:br-eth1,physnet2:br-eth2,physnet3
-# :br-eth3)
-CONFIG_NEUTRON_LB_INTERFACE_MAPPINGS=physnet:br-enp0s9
-
-# Type of network to allocate for tenant networks (eg. vlan, local,
-# gre, vxlan)
-CONFIG_NEUTRON_OVS_TENANT_NETWORK_TYPE={{ network_type }}
-
-# A comma separated list of VLAN ranges for the Neutron openvswitch
-# plugin (eg. physnet1:1:4094,physnet2,physnet3:3000:3999)
-CONFIG_NEUTRON_OVS_VLAN_RANGES=physnet:1000:2000
-
-# A comma separated list of bridge mappings for the Neutron
-# openvswitch plugin (eg. physnet1:br-eth1,physnet2:br-eth2,physnet3
-# :br-eth3)
+# Comma-separated list of bridge mappings for the OpenStack
+# Networking Open vSwitch plugin. Each tuple in the list must be in
+# the format <physical_network>:<ovs_bridge>. Example: physnet1:br-
+# eth1,physnet2:br-eth2,physnet3:br-eth3
 CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=physnet:br-enp0s9
 
-# A comma separated list of colon-separated OVS bridge:interface
-# pairs. The interface will be added to the associated bridge.
+# Comma-separated list of colon-separated Open vSwitch
+# <bridge>:<interface> pairs. The interface will be added to the
+# associated bridge.
 CONFIG_NEUTRON_OVS_BRIDGE_IFACES=
 
-# A comma separated list of tunnel ranges for the Neutron openvswitch
-# plugin (eg. 1:1000)
-CONFIG_NEUTRON_OVS_TUNNEL_RANGES=1000:2000
-
-# The interface for the OVS tunnel. Packstack will override the IP
+# Interface for the Open vSwitch tunnel. Packstack overrides the IP
 # address used for tunnels on this hypervisor to the IP found on the
-# specified interface. (eg. eth1)
+# specified interface (for example, eth1).
 CONFIG_NEUTRON_OVS_TUNNEL_IF=enp0s9
 
-# VXLAN UDP port
-CONFIG_NEUTRON_OVS_VXLAN_UDP_PORT=
+# VXLAN UDP port.
+CONFIG_NEUTRON_OVS_VXLAN_UDP_PORT=4789
 
-# To set up Horizon communication over https set this to 'y'
+# Specify 'y' to set up Horizon communication over https. ['y', 'n']
 CONFIG_HORIZON_SSL=n
 
-# PEM encoded certificate to be used for ssl on the https server,
-# leave blank if one should be generated, this certificate should not
-# require a passphrase
+# PEM-encoded certificate to be used for SSL connections on the https
+# server (the certificate should not require a passphrase). To
+# generate a certificate, leave blank.
 CONFIG_SSL_CERT=
 
-# SSL keyfile corresponding to the certificate if one was entered
+# SSL keyfile corresponding to the certificate if one was specified.
 CONFIG_SSL_KEY=
 
-# PEM encoded CA certificates from which the certificate chain of the
+# PEM-encoded CA certificates from which the certificate chain of the
 # server certificate can be assembled.
 CONFIG_SSL_CACHAIN=
 
-# The password to use for the Swift to authenticate with Keystone
+# Password to use for the Object Storage service to authenticate with
+# the Identity service.
 CONFIG_SWIFT_KS_PW={{ secret }}
 
-# A comma separated list of devices which to use as Swift Storage
-# device. Each entry should take the format /path/to/dev, for example
-# /dev/vdb will install /dev/vdb as Swift storage device (packstack
-# does not create the filesystem, you must do this first). If value is
-# omitted Packstack will create a loopback device for test setup
+# Comma-separated list of devices to use as storage device for Object
+# Storage. Each entry must take the format /path/to/dev (for example,
+# specifying /dev/vdb installs /dev/vdb as the Object Storage storage
+# device; Packstack does not create the filesystem, you must do this
+# first). If left empty, Packstack creates a loopback device for test
+# setup.
 CONFIG_SWIFT_STORAGES=/dev/sdb,/dev/sdc
 
-# Number of swift storage zones, this number MUST be no bigger than
-# the number of storage devices configured
+# Number of Object Storage storage zones; this number MUST be no
+# larger than the number of configured storage devices.
 CONFIG_SWIFT_STORAGE_ZONES=2
 
-# Number of swift storage replicas, this number MUST be no bigger
-# than the number of storage zones configured
+# Number of Object Storage storage replicas; this number MUST be no
+# larger than the number of configured storage zones.
 CONFIG_SWIFT_STORAGE_REPLICAS=2
 
-# FileSystem type for storage nodes
+# File system type for storage nodes. ['xfs', 'ext4']
 CONFIG_SWIFT_STORAGE_FSTYPE=xfs
 
-# Shared secret for Swift
+# Custom seed number to use for swift_hash_path_suffix in
+# /etc/swift/swift.conf. If you do not provide a value, a seed number
+# is automatically generated.
 CONFIG_SWIFT_HASH={{ secret }}
 
-# Size of the swift loopback file storage device
+# Size of the Object Storage loopback file storage device.
 CONFIG_SWIFT_STORAGE_SIZE=2G
 
-# Whether to provision for demo usage and testing. Note that
-# provisioning is only supported for all-in-one installations.
-CONFIG_PROVISION_DEMO=n
-
-# Whether to configure tempest for testing
-CONFIG_PROVISION_TEMPEST={{ 'y' if components.tempest == true else 'n' }}
-
-# The name of the Tempest Provisioning user. If you don't provide a
-# user name, Tempest will be configured in a standalone mode
-CONFIG_PROVISION_TEMPEST_USER=
-
-# The password to use for the Tempest Provisioning user
-CONFIG_PROVISION_TEMPEST_USER_PW={{ secret }}
-
-# The CIDR network address for the floating IP subnet
-CONFIG_PROVISION_DEMO_FLOATRANGE=172.24.4.224/28
-
-# The uri of the tempest git repository to use
-CONFIG_PROVISION_TEMPEST_REPO_URI=https://github.com/openstack/tempest.git
-
-# The revision of the tempest git repository to use
-CONFIG_PROVISION_TEMPEST_REPO_REVISION=master
-
-# Whether to configure the ovs external bridge in an all-in-one
-# deployment
-CONFIG_PROVISION_ALL_IN_ONE_OVS_BRIDGE=n
-
-# The password used by Heat user to authenticate against MySQL
+# Password used by Orchestration service user to authenticate against
+# the database.
 CONFIG_HEAT_DB_PW={{ secret }}
 
-# The encryption key to use for authentication info in database
-# CONFIG_HEAT_AUTH_ENC_KEY=
+# Encryption key to use for authentication in the Orchestration
+# database (16, 24, or 32 chars).
+CONFIG_HEAT_AUTH_ENC_KEY={{ secret }}
 
-# The password to use for the Heat to authenticate with Keystone
+# Password to use for the Orchestration service to authenticate with
+# the Identity service.
 CONFIG_HEAT_KS_PW={{ secret }}
 
-# Set to 'y' if you would like Packstack to install Heat CloudWatch
-# API
+# Specify 'y' to install the Orchestration CloudWatch API. ['y', 'n']
 CONFIG_HEAT_CLOUDWATCH_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
-# Set to 'y' if you would like Packstack to install Heat with trusts
-# as deferred auth method. If not, the stored password method will be
-# used.
-CONFIG_HEAT_USING_TRUSTS=y
-
-# Set to 'y' if you would like Packstack to install Heat
-# CloudFormation API
+# Specify 'y' to install the Orchestration CloudFormation API. ['y',
+# 'n']
 CONFIG_HEAT_CFN_INSTALL={{ 'y' if components.heat == true else 'n' }}
 
-# Name of Keystone domain for Heat
+# Name of the Identity domain for Orchestration.
 CONFIG_HEAT_DOMAIN=heat
 
-# Name of Keystone domain admin user for Heat
+# Name of the Identity domain administrative user for Orchestration.
 CONFIG_HEAT_DOMAIN_ADMIN=heat_admin
 
-# Password for Keystone domain admin user for Heat
+# Password for the Identity domain administrative user for
+# Orchestration.
 CONFIG_HEAT_DOMAIN_PASSWORD={{ secret }}
 
-# The password to use for the Sahara DB access
-CONFIG_SAHARA_DB_PW={{ secret }}
+# Specify 'y' to provision for demo usage and testing. ['y', 'n']
+CONFIG_PROVISION_DEMO=n
 
-# The password to use for Sahara to authenticate with Keystone
-CONFIG_SAHARA_KS_PW={{ secret }}
+# Specify 'y' to configure the OpenStack Integration Test Suite
+# (tempest) for testing. The test suite requires OpenStack Networking
+# to be installed. ['y', 'n']
+CONFIG_PROVISION_TEMPEST={{ 'y' if components.tempest == true else 'n' }}
 
-# The password to use for the Trove DB access
-CONFIG_TROVE_DB_PW={{ secret }}
+# CIDR network address for the floating IP subnet.
+CONFIG_PROVISION_DEMO_FLOATRANGE=172.24.4.224/28
 
-# The password to use for Trove to authenticate with Keystone
-CONFIG_TROVE_KS_PW={{ secret }}
+# The name to be assigned to the demo image in Glance (default
+# "cirros").
+CONFIG_PROVISION_IMAGE_NAME=cirros
 
-# The user to use when Trove connects to Nova
-CONFIG_TROVE_NOVA_USER=admin
+# A URL or local file location for an image to download and provision
+# in Glance (defaults to a URL for a recent "cirros" image).
+CONFIG_PROVISION_IMAGE_URL=http://download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img
 
-# The tenant to use when Trove connects to Nova
-CONFIG_TROVE_NOVA_TENANT=services
+# Format for the demo image (default "qcow2").
+CONFIG_PROVISION_IMAGE_FORMAT=qcow2
 
-# The password to use when Trove connects to Nova
-CONFIG_TROVE_NOVA_PW={{ secret }}
+# User to use when connecting to instances booted from the demo
+# image.
+CONFIG_PROVISION_IMAGE_SSH_USER=cirros
 
-# Secret key for signing metering messages
+# Name of the Integration Test Suite provisioning user. If you do not
+# provide a user name, Tempest is configured in a standalone mode.
+CONFIG_PROVISION_TEMPEST_USER=
+
+# Password to use for the Integration Test Suite provisioning user.
+CONFIG_PROVISION_TEMPEST_USER_PW={{ secret }}
+
+# CIDR network address for the floating IP subnet.
+CONFIG_PROVISION_TEMPEST_FLOATRANGE=172.24.4.224/28
+
+# URI of the Integration Test Suite git repository.
+CONFIG_PROVISION_TEMPEST_REPO_URI=https://github.com/openstack/tempest.git
+
+# Revision (branch) of the Integration Test Suite git repository.
+CONFIG_PROVISION_TEMPEST_REPO_REVISION=master
+
+# Specify 'y' to configure the Open vSwitch external bridge for an
+# all-in-one deployment (the L3 external bridge acts as the gateway
+# for virtual machines). ['y', 'n']
+CONFIG_PROVISION_ALL_IN_ONE_OVS_BRIDGE=n
+
+# Secret key for signing Telemetry service (ceilometer) messages.
 CONFIG_CEILOMETER_SECRET={{ secret }}
 
-# The password to use for Ceilometer to authenticate with Keystone
+# Password to use for Telemetry to authenticate with the Identity
+# service.
 CONFIG_CEILOMETER_KS_PW={{ secret }}
 
-# The IP address of the server on which to install MongoDB
+# Backend driver for Telemetry's group membership coordination.
+# ['redis', 'none']
+CONFIG_CEILOMETER_COORDINATION_BACKEND=redis
+
+# IP address of the server on which to install MongoDB.
 CONFIG_MONGODB_HOST={{ address.controller }}
 
-# The password of the nagiosadmin user on the Nagios server
+# IP address of the server on which to install the Redis master
+# server.
+CONFIG_REDIS_MASTER_HOST={{ address.controller }}
+
+# Port on which the Redis server(s) listens.
+CONFIG_REDIS_PORT=6379
+
+# Specify 'y' to have Redis try to use HA. ['y', 'n']
+CONFIG_REDIS_HA=n
+
+# Hosts on which to install Redis slaves.
+CONFIG_REDIS_SLAVE_HOSTS=
+
+# Hosts on which to install Redis sentinel servers.
+CONFIG_REDIS_SENTINEL_HOSTS=
+
+# Host to configure as the Redis coordination sentinel.
+CONFIG_REDIS_SENTINEL_CONTACT_HOST=
+
+# Port on which Redis sentinel servers listen.
+CONFIG_REDIS_SENTINEL_PORT=26379
+
+# Quorum value for Redis sentinel servers.
+CONFIG_REDIS_SENTINEL_QUORUM=2
+
+# Name of the master server watched by the Redis sentinel. ['[a-z]+']
+CONFIG_REDIS_MASTER_NAME=mymaster
+
+# Password to use for OpenStack Data Processing (sahara) to access
+# the database.
+CONFIG_SAHARA_DB_PW={{ secret }}
+
+# Password to use for OpenStack Data Processing to authenticate with
+# the Identity service.
+CONFIG_SAHARA_KS_PW={{ secret }}
+
+# Password to use for OpenStack Database-as-a-Service (trove) to
+# access the database.
+CONFIG_TROVE_DB_PW={{ secret }}
+
+# Password to use for OpenStack Database-as-a-Service to authenticate
+# with the Identity service.
+CONFIG_TROVE_KS_PW={{ secret }}
+
+# User name to use when OpenStack Database-as-a-Service connects to
+# the Compute service.
+CONFIG_TROVE_NOVA_USER=admin
+
+# Tenant to use when OpenStack Database-as-a-Service connects to the
+# Compute service.
+CONFIG_TROVE_NOVA_TENANT=services
+
+# Password to use when OpenStack Database-as-a-Service connects to
+# the Compute service.
+CONFIG_TROVE_NOVA_PW={{ secret }}
+
+# Password of the nagiosadmin user on the Nagios server.
 CONFIG_NAGIOS_PW={{ secret }}
