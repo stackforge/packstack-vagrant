@@ -1,7 +1,6 @@
 ---
 - lineinfile: dest=/etc/yum/pluginconf.d/fastestmirror.conf regexp=^enabled= line=enabled=0
-- yum: name=http://rdoproject.org/repos/openstack-kilo/rdo-release-kilo.rpm state=present
-- get_url: url=https://repos.fedorapeople.org/repos/openstack/openstack-trunk/epel-7/rc2/delorean-kilo.repo dest=/etc/yum.repos.d/delorean-kilo.repo mode=0644
+- yum: name=http://rdoproject.org/repos/openstack-kilo/rdo-testing-kilo.rpm state=present
 - yum: name=* state=latest
 - yum: name=openstack-selinux state=present
 - copy: src=files/id_rsa dest=/home/vagrant/.ssh/id_packstack mode=0600 owner=vagrant group=vagrant
