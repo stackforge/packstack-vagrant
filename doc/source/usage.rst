@@ -28,3 +28,10 @@ APIs
 All OpenStack API services are running on the controller node with the
 default IP address ``10.100.50.10``.
 
+Rally
+-----
+
+Install `Rally <https://github.com/openstack/rally>`_, a framework for
+performance analysis and benchmarking of individual OpenStack components,
+with ``/home/vagrant/scripts/rally.sh`` to ``/opt/rally``. The directory
+is accessible through the webserver, by default at http://10.100.50.10/rally/.
