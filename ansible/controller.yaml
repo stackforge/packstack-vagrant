@@ -17,8 +17,7 @@
   when: not development
 - template: src=files/openrc.j2 dest=/home/vagrant/openrc owner=vagrant group=vagrant mode=0644
 - lineinfile: dest=/home/vagrant/.bashrc line='source $HOME/openrc'
-- copy: src=files/setup.sh dest=/home/vagrant/scripts/setup.sh owner=vagrant group=vagrant mode=0755
-- copy: src=files/rally.sh dest=/home/vagrant/scripts/rally.sh owner=vagrant group=vagrant mode=0755
+- copy: src=files/scripts/ dest=/home/vagrant/scripts/ owner=vagrant group=vagrant mode=0755
 - filesystem: fstype=xfs dev=/dev/sdb force=yes
 - filesystem: fstype=xfs dev=/dev/sdc force=yes
 - template: src=files/packstack.answers.j2 dest=/home/vagrant/packstack.answers owner=vagrant group=vagrant
