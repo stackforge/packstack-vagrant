@@ -2,7 +2,8 @@
 - yum: name=nfs-utils state=present
 - yum: name=xfsprogs state=present
 - filesystem: fstype=xfs dev=/dev/sdb force=yes
-- mount: name=/export src='/dev/sdb' fstype=xfs state=mounted
+- mount: name=/export src=/dev/sdb fstype=xfs state=mounted
+- file: path=/export state=directory mode=0777
 - copy: src=files/exports dest=/etc/exports mode=0644 owner=root group=root
 - service: name=rpcbind state=started enabled=yes
 - service: name=nfs-server state=started enabled=yes
