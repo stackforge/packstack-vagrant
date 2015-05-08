@@ -87,6 +87,8 @@ Vagrant.configure(2) do |config|
                         virtualbox__intnet: 'tunnel'
       elsif name == 'storage'
         add_block_device(node, 1, CONFIG['resources']['storage'])
+        add_block_device(node, 2, CONFIG['resources']['storage'])
+        add_block_device(node, 3, CONFIG['resources']['storage'])
       end
     end
   end
@@ -103,8 +105,6 @@ Vagrant.configure(2) do |config|
       vb.customize ['modifyvm', :id, '--memory', memory]
       vb.customize ['modifyvm', :id, '--cpus', vcpus]
     end
-    add_block_device(node, 1, CONFIG['resources']['storage'])
-    add_block_device(node, 2, CONFIG['resources']['storage'])
     node.vm.provision 'shell', path: 'scripts/initialize.sh', privileged: false
   end
 end

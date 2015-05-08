@@ -18,8 +18,6 @@
 - template: src=files/openrc.j2 dest=/home/vagrant/openrc owner=vagrant group=vagrant mode=0644
 - lineinfile: dest=/home/vagrant/.bashrc line='source $HOME/openrc'
 - copy: src=files/scripts/ dest=/home/vagrant/scripts/ owner=vagrant group=vagrant mode=0755
-- filesystem: fstype=xfs dev=/dev/sdb force=yes
-- filesystem: fstype=xfs dev=/dev/sdc force=yes
 - template: src=files/packstack.answers.j2 dest=/home/vagrant/packstack.answers owner=vagrant group=vagrant
 - copy: src=files/gitconfig dest=/home/vagrant/.gitconfig owner=vagrant group=vagrant mode=0644
 - file: src=/home/vagrant/.ssh/id_packstack dest=/home/vagrant/.ssh/id_rsa owner=vagrant group=vagrant state=link
