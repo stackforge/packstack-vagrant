@@ -105,6 +105,6 @@ Vagrant.configure(2) do |config|
     end
     add_block_device(node, 1, CONFIG['resources']['storage'])
     add_block_device(node, 2, CONFIG['resources']['storage'])
-    node.vm.provision 'shell', path: 'files/initialize.sh', privileged: false
+    node.vm.provision 'shell', path: 'scripts/initialize.sh', privileged: false
   end
 end
