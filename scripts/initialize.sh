@@ -16,3 +16,5 @@ for node in $(sed -n '/<<< Packstack >>>/{:a;n;/>>> Packstack <<</b;p;ba}' /etc/
     ssh -i $HOME/.ssh/id_packstack $node "sudo cp /home/vagrant/.ssh/* /root/.ssh"
     ssh -i $HOME/.ssh/id_packstack $node "sudo chown -R root:root /root/.ssh"
 done
+
+packstack --answer-file /home/vagrant/packstack.answers
