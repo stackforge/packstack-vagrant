@@ -106,6 +106,11 @@ Development version
 To use the development version (``master``) of Packstack set
 ``development: true``.
 
+Debug mode
+----------
+
+To enable the debug mode for the deployed services set ``debug: true``.
+
 Storage backend
 ---------------
 

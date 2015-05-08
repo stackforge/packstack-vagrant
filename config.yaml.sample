@@ -2,6 +2,7 @@
 box:
   name: boxcutter/centos71
   storage_controller: 'SATA Controller'
+debug: false
 development: false
 bridge_internal: tap0
 network_agent: openvswitch

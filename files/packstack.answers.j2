@@ -75,7 +75,7 @@ EXCLUDE_SERVERS=
 
 # Specify 'y' if you want to run OpenStack services in debug mode;
 # otherwise, specify 'n'. ['y', 'n']
-CONFIG_DEBUG_MODE=y
+CONFIG_DEBUG_MODE={{ 'y' if debug == true else 'n' }}
 
 # IP address of the server on which to install OpenStack services
 # specific to the controller role (for example, API servers or
