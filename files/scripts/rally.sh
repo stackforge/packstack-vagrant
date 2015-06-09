@@ -3,10 +3,11 @@
 # https://rally.readthedocs.org/en/latest/install.html#automated-installation
 
 cd /opt
-sudo yum install -y git
+sudo yum install -y git gcc libffi-devel python-devel openssl-devel gmp-devel libxml2-devel libxslt-devel postgresql-devel
 sudo git clone https://git.openstack.org/openstack/rally
 sudo chown -R vagrant:vagrant rally
 sudo ./rally/install_rally.sh
+sudo chown -R vagrant:vagrant /etc/rally /var/lib/rally
 rally-manage db recreate
 source /home/vagrant/openrc
 rally deployment create --fromenv --name=packstack
