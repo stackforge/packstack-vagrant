@@ -2,7 +2,7 @@
 
 source /home/vagrant/openrc
 
-glance image-create --name "Fedora 21" --disk-format qcow2 --container-format bare --is-public True --copy http://download.fedoraproject.org/pub/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.qcow2
+glance image-create --name "Fedora 22" --disk-format qcow2 --container-format bare --is-public True --copy http://ftp-stud.hs-esslingen.de/pub/fedora/linux/releases/22/Cloud/x86_64/Images/Fedora-Cloud-Base-22-20150521.x86_64.qcow2
 glance image-create --name "Ubuntu 14.04" --disk-format qcow2 --container-format bare --is-public True --copy https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
 glance image-create --name "CentOS 7" --disk-format qcow2 --container-format bare --is-public True --copy http://cloud.centos.org/centos/7/devel/CentOS-7-x86_64-GenericCloud.qcow2
 glance image-create --name "Cirros 0.3.3" --disk-format qcow2 --container-format bare --is-public True --copy http://download.cirros-cloud.net/0.3.3/cirros-0.3.3-x86_64-disk.img
