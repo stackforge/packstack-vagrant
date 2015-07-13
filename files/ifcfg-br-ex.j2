@@ -1,0 +1,11 @@
+NM_CONTROLLED=no
+DEVICE=br-ex
+DEVICETYPE=ovs
+TYPE=OVSBridge
+BOOTPROTO=static
+IPADDR={{ address.network }}
+NETMASK={{ network.internal.netmask }}
+BROADCAST={{ network.internal.broadcast }}
+GATEWAY={{ network.internal.gateway }}
+DNS1={{ network.internal.dns1 }}
+DNS2={{ network.internal.dns2 }}

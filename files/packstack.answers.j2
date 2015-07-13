@@ -810,7 +810,8 @@ CONFIG_NEUTRON_DB_PW={{ secret }}
 # the OpenStack Networking L3 agent to use for external  traffic.
 # Specify 'provider' if you intend to use a provider network to handle
 # external traffic.
-CONFIG_NEUTRON_L3_EXT_BRIDGE=br-ex
+#CONFIG_NEUTRON_L3_EXT_BRIDGE=br-ex
+CONFIG_NEUTRON_L3_EXT_BRIDGE=provider
 
 # Password for the OpenStack Networking metadata agent.
 CONFIG_NEUTRON_METADATA_PW={{ secret }}
@@ -830,19 +831,19 @@ CONFIG_NEUTRON_FWAAS=y
 # Comma-separated list of network-type driver entry points to be
 # loaded from the neutron.ml2.type_drivers namespace. ['local',
 # 'flat', 'vlan', 'gre', 'vxlan']
-CONFIG_NEUTRON_ML2_TYPE_DRIVERS={{ network_type }},flat
+CONFIG_NEUTRON_ML2_TYPE_DRIVERS={{ network.type }},flat
 
 # Comma-separated, ordered list of network types to allocate as
 # tenant networks. The 'local' value is only useful for single-box
 # testing and provides no connectivity between hosts. ['local',
 # 'vlan', 'gre', 'vxlan']
-CONFIG_NEUTRON_ML2_TENANT_NETWORK_TYPES={{ network_type }}
+CONFIG_NEUTRON_ML2_TENANT_NETWORK_TYPES={{ network.type }}
 
 # Comma-separated ordered list of networking mechanism driver entry
 # points to be loaded from the neutron.ml2.mechanism_drivers
 # namespace. ['logger', 'test', 'linuxbridge', 'openvswitch',
 # 'hyperv', 'ncs', 'arista', 'cisco_nexus', 'mlnx', 'l2population']
-CONFIG_NEUTRON_ML2_MECHANISM_DRIVERS={{ network_agent }}
+CONFIG_NEUTRON_ML2_MECHANISM_DRIVERS={{ network.agent }}
 
 # Comma-separated list of physical_network names with which flat
 # networks can be created. Use * to allow flat networks with arbitrary
@@ -874,7 +875,7 @@ CONFIG_NEUTRON_ML2_VNI_RANGES=10:100
 
 # Name of the L2 agent to be used with OpenStack Networking.
 # ['linuxbridge', 'openvswitch']
-CONFIG_NEUTRON_L2_AGENT={{ network_agent }}
+CONFIG_NEUTRON_L2_AGENT={{ network.agent }}
 
 # Comma-separated list of interface mappings for the OpenStack
 # Networking linuxbridge plugin. Each tuple in the list must be in the
@@ -886,7 +887,8 @@ CONFIG_NEUTRON_LB_INTERFACE_MAPPINGS=
 # Networking Open vSwitch plugin. Each tuple in the list must be in
 # the format <physical_network>:<ovs_bridge>. Example: physnet1:br-
 # eth1,physnet2:br-eth2,physnet3:br-eth3
-CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=physnet:br-enp0s9
+#CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=physnet:br-ex
+CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS=external:br-ex
 
 # Comma-separated list of colon-separated Open vSwitch
 # <bridge>:<interface> pairs. The interface will be added to the
@@ -896,7 +898,7 @@ CONFIG_NEUTRON_OVS_BRIDGE_IFACES=
 # Interface for the Open vSwitch tunnel. Packstack overrides the IP
 # address used for tunnels on this hypervisor to the IP found on the
 # specified interface (for example, eth1).
-CONFIG_NEUTRON_OVS_TUNNEL_IF=enp0s9
+CONFIG_NEUTRON_OVS_TUNNEL_IF={{ network.tunnel_interface }}
 
 # VXLAN UDP port.
 CONFIG_NEUTRON_OVS_VXLAN_UDP_PORT=4789

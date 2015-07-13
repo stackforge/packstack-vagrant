@@ -64,41 +64,43 @@ Vagrant.configure(2) do |config|
     name = "compute#{index + 1}"
     config.vm.define name do |node|
       node.vm.hostname = name
-      node.vm.network :public_network,
-                      ip: address,
-                      netmask: CONFIG['netmask_internal'],
-                      bridge: CONFIG['bridge_internal']
       node.vm.network :private_network,
                       ip: "10.0.0.2#{index}",
                       virtualbox__intnet: 'tunnel'
+      node.vm.network :public_network,
+                      ip: address,
+                      netmask: CONFIG['network']['internal']['netmask'],
+                      bridge: CONFIG['network']['internal']['bridge']
     end
   end
 
-  %w(network storage).each do |name|
-    config.vm.define name do |node|
-      node.vm.hostname = name
-      node.vm.network :public_network,
-                      ip: CONFIG['address'][name],
-                      netmask: CONFIG['netmask_internal'],
-                      bridge: CONFIG['bridge_internal']
-      if name == 'network'
-        node.vm.network :private_network,
-                        ip: '10.0.0.30',
-                        virtualbox__intnet: 'tunnel'
-      elsif name == 'storage'
-        add_block_device(node, 1, CONFIG['resources']['storage'])
-        add_block_device(node, 2, CONFIG['resources']['storage'])
-        add_block_device(node, 3, CONFIG['resources']['storage'])
-      end
-    end
+  config.vm.define 'network' do |node|
+    node.vm.hostname = 'network'
+    node.vm.network :private_network,
+                    ip: '10.0.0.30',
+                    virtualbox__intnet: 'tunnel'
+    node.vm.network :public_network,
+                    bridge: CONFIG['network']['internal']['bridge'],
+                    auto_config: false
+  end
+
+  config.vm.define 'storage' do |node|
+    node.vm.hostname = 'storage'
+    node.vm.network :public_network,
+                    ip: CONFIG['address']['storage'],
+                    netmask: CONFIG['network']['internal']['netmask'],
+                    bridge: CONFIG['network']['internal']['bridge']
+    add_block_device(node, 1, CONFIG['resources']['storage'])
+    add_block_device(node, 2, CONFIG['resources']['storage'])
+    add_block_device(node, 3, CONFIG['resources']['storage'])
   end
 
   config.vm.define 'controller', primary: true do |node|
     node.vm.hostname = 'controller'
     node.vm.network :public_network,
                     ip: CONFIG['address']['controller'],
-                    netmask: CONFIG['netmask_internal'],
-                    bridge: CONFIG['bridge_internal']
+                    netmask: CONFIG['network']['internal']['netmask'],
+                    bridge: CONFIG['network']['internal']['bridge']
     node.vm.provider 'virtualbox' do |vb|
       memory = CONFIG['resources']['memory'] * 2
       vcpus = CONFIG['resources']['vcpus'] * 2

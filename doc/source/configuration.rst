@@ -33,19 +33,25 @@ storage controller of the used base box must support at least three ports.
 Networking
 ----------
 
-Bridges
-~~~~~~~
+Internal network
+~~~~~~~~~~~~~~~~
 
 ::
 
-    bridge_internal: tap0
+    network:
+      internal:
+        bridge: tap0
+        netmask: 255.255.0.0
+        broadcast: 10.100.255.255
+        gateway: 10.100.0.1
+        dns1: 208.67.222.222
+        dns2: 208.67.220.220
 
 Addresses
 ~~~~~~~~~
 
 ::
 
-    netmask_internal: 255.255.0.0
     address:
       controller: 10.100.50.10
       network: 10.100.50.30
@@ -62,14 +68,16 @@ L2 agent
 
 ::
 
-    network_agent: openvswitch
+    network:
+      agent: openvswitch
 
 Tenant networks
 ~~~~~~~~~~~~~~~
 
 ::
 
-    network_type: gre
+    network:
+      type: gre
 
 Clock synchronization (NTP)
 ---------------------------
