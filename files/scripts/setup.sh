@@ -22,7 +22,6 @@ fi
 openstack role add admin --project services --user admin
 OS_TENANT_NAME=services neutron net-create floating001 --router:external --provider:physical_network external --provider:network_type flat
 OS_TENANT_NAME=services neutron subnet-create --name floating001 --allocation-pool start=203.0.113.100,end=203.0.113.200 --disable-dhcp --gateway 203.0.113.1 floating001 203.0.113.0/24
-openstack role remove admin --project services --user admin
 
 neutron net-create internal001
 neutron subnet-create --name internal001 internal001 192.168.200.0/24
