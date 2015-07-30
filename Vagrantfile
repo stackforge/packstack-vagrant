@@ -69,8 +69,8 @@ Vagrant.configure(2) do |config|
                       virtualbox__intnet: 'tunnel'
       node.vm.network :public_network,
                       ip: address,
-                      netmask: CONFIG['network']['internal']['netmask'],
-                      bridge: CONFIG['network']['internal']['bridge']
+                      netmask: CONFIG['network']['external']['netmask'],
+                      bridge: CONFIG['network']['external']['bridge']
     end
   end
 
@@ -80,7 +80,7 @@ Vagrant.configure(2) do |config|
                     ip: '10.0.0.30',
                     virtualbox__intnet: 'tunnel'
     node.vm.network :public_network,
-                    bridge: CONFIG['network']['internal']['bridge'],
+                    bridge: CONFIG['network']['external']['bridge'],
                     auto_config: false
   end
 
@@ -88,8 +88,8 @@ Vagrant.configure(2) do |config|
     node.vm.hostname = 'storage'
     node.vm.network :public_network,
                     ip: CONFIG['address']['storage'],
-                    netmask: CONFIG['network']['internal']['netmask'],
-                    bridge: CONFIG['network']['internal']['bridge']
+                    netmask: CONFIG['network']['external']['netmask'],
+                    bridge: CONFIG['network']['external']['bridge']
     add_block_device(node, 1, CONFIG['resources']['storage'])
     add_block_device(node, 2, CONFIG['resources']['storage'])
     add_block_device(node, 3, CONFIG['resources']['storage'])
@@ -99,8 +99,8 @@ Vagrant.configure(2) do |config|
     node.vm.hostname = 'controller'
     node.vm.network :public_network,
                     ip: CONFIG['address']['controller'],
-                    netmask: CONFIG['network']['internal']['netmask'],
-                    bridge: CONFIG['network']['internal']['bridge']
+                    netmask: CONFIG['network']['external']['netmask'],
+                    bridge: CONFIG['network']['external']['bridge']
     node.vm.provider 'virtualbox' do |vb|
       memory = CONFIG['resources']['memory'] * 2
       vcpus = CONFIG['resources']['vcpus'] * 2
