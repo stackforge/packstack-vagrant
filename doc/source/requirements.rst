@@ -6,12 +6,12 @@ Vagrant
 
 The installation of Vagrant is documented in the `Vagrant
 documentation <https://docs.vagrantup.com/v2/installation/index.html>`__.
-Ensure to use at least version ``1.7.2`` of Vagrant.
+Ensure to use at least version ``1.7.4`` of Vagrant.
 
 ::
 
     $ vagrant --version
-    Vagrant 1.7.2
+    Vagrant 1.7.4
 
 Vagrant plugins
 ~~~~~~~~~~~~~~~

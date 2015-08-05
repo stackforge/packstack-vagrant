@@ -39,8 +39,8 @@ Vagrant.configure(2) do |config|
   config.vm.box = CONFIG['box']['name']
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.vm.provider 'virtualbox' do |vb|
-    vb.customize ['modifyvm', :id, '--memory', CONFIG['resources']['memory']]
-    vb.customize ['modifyvm', :id, '--cpus', CONFIG['resources']['vcpus']]
+    vb.memory = CONFIG['resources']['memory']
+    vb.cpus = CONFIG['resources']['vcpus']
     vb.customize ['modifyvm', :id, '--largepages', 'on']
     vb.customize ['modifyvm', :id, '--pae', 'off']
   end
