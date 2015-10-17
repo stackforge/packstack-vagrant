@@ -1,1 +1,0 @@
-/export 10.100.50.0/16(rw,fsid=0,no_subtree_check,sync,no_root_squash)

@@ -1,12 +1,7 @@
-packstack-vagrant
-=================
+This project is no longer maintained.
 
-This is a `Vagrant <https://www.vagrantup.com>`__ environment providing
-a `Packstack <https://github.com/stackforge/packstack>`__ installation
-on top of `CentOS <http://www.centos.org>`__.
+The contents of this repository are still available in the Git source code
+management system. To see the contents of this repository before it reached
+its end of life, please check out the previous commit with 
+"git checkout HEAD^1".
 
-Documentation
--------------
-
-.. image:: https://readthedocs.org/projects/packstack-vagrant/badge/?version=latest
-   :target: http://packstack-vagrant.readthedocs.org/en/latest/
